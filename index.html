@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卢梦潇 | 游戏运营 · 个人主页</title>
+<style>
+  :root {
+    --bg: #0a0a14;
+    --bg2: #111122;
+    --card: #16162d;
+    --border: #252545;
+    --text: #d0d0e0;
+    --text2: #8888aa;
+    --accent: #5b8def;
+    --accent2: #7c5ce7;
+    --green: #2ecc71;
+    --gold: #f0c060;
+    --red: #e05555;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+  }
+  a { color: var(--accent); text-decoration:none; transition:color .2s; }
+  a:hover { color: var(--accent2); }
+
+  /* Nav */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background: rgba(10,10,20,.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); padding: 0 24px;
+    display:flex; align-items:center; justify-content:center; height:52px; gap:32px;
+  }
+  nav a { color: var(--text2); font-size:14px; font-weight:500; padding:6px 0; border-bottom:2px solid transparent; transition:all .2s; }
+  nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Sections */
+  section { max-width: 1000px; margin:0 auto; padding: 80px 24px; }
+  section:first-of-type { padding-top: 120px; }
+  .section-title {
+    font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 8px; text-align: center;
+  }
+  .section-subtitle { text-align:center; color: var(--text2); font-size:15px; margin-bottom: 48px; }
+
+  /* Hero */
+  #hero { text-align:center; }
+  .hero-avatar {
+    width:120px; height:120px; border-radius:50%; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    margin:0 auto 24px; display:flex; align-items:center; justify-content:center; font-size:48px; color:#fff; font-weight:700;
+  }
+  .hero-name { font-size: 42px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .hero-title { font-size: 20px; color: var(--accent); margin-bottom: 16px; font-weight: 500; }
+  .hero-tags { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom: 32px; }
+  .hero-tags span {
+    padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    background: var(--card); border: 1px solid var(--border); color: var(--text2);
+  }
+  .hero-stats { display:flex; gap:40px; justify-content:center; flex-wrap:wrap; margin-bottom: 40px; }
+  .hero-stat { text-align:center; }
+  .hero-stat .num { font-size:36px; font-weight:800; color: var(--accent); }
+  .hero-stat .label { font-size:13px; color: var(--text2); margin-top:4px; }
+  .btn-primary {
+    display:inline-block; padding: 12px 32px; border-radius:24px; font-size:15px; font-weight:600;
+    background: var(--accent); color: #fff; border:none; cursor:pointer; transition: all .2s;
+  }
+  .btn-primary:hover { background: var(--accent2); color:#fff; transform: translateY(-1px); }
+  .btn-outline {
+    display:inline-block; padding: 12px 32px; border-radius:24px; font-size:15px; font-weight:600;
+    background: transparent; color: var(--accent); border: 1.5px solid var(--accent); cursor:pointer;
+    margin-left:12px; transition: all .2s;
+  }
+  .btn-outline:hover { background: var(--accent); color:#fff; }
+
+  /* Cards */
+  .card {
+    background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
+    padding: 28px; transition: all .25s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card h3 { font-size:18px; color:#fff; margin-bottom:12px; }
+  .card p, .card li { font-size:14px; color: var(--text2); line-height:1.8; }
+  .card ul { padding-left:18px; }
+
+  /* Two-column */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:32px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background: var(--border); }
+  .timeline-item { position:relative; margin-bottom:36px; }
+  .timeline-item::before {
+    content:''; position:absolute; left:-28px; top:4px; width:14px; height:14px;
+    border-radius:50%; background: var(--accent); border:3px solid var(--bg);
+  }
+  .timeline-date { font-size:13px; color: var(--accent); font-weight:600; margin-bottom:4px; }
+  .timeline-title { font-size:17px; color:#fff; font-weight:600; margin-bottom:6px; }
+  .timeline-sub { font-size:14px; color: var(--text2); }
+  .timeline-desc { font-size:13px; color: var(--text2); margin-top:8px; line-height:1.8; }
+
+  /* Skills */
+  .skill-bar { margin-bottom:16px; }
+  .skill-bar .name { font-size:14px; color:#fff; margin-bottom:6px; font-weight:500; }
+  .skill-bar .bar { height:6px; background: var(--border); border-radius:3px; overflow:hidden; }
+  .skill-bar .bar .fill { height:100%; border-radius:3px; transition:width 1s ease; }
+
+  /* Contact */
+  .contact-item {
+    display:flex; align-items:center; gap:12px; padding:16px 20px;
+    background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
+  }
+  .contact-item .icon { font-size:24px; }
+  .contact-item .val { font-size:15px; color:#fff; }
+
+  /* Footer */
+  footer { text-align:center; padding:40px 24px; color: var(--text2); font-size:13px; border-top:1px solid var(--border); }
+
+  /* Detail page link */
+  .project-link {
+    display:inline-block; padding:8px 20px; border-radius:20px; font-size:13px; font-weight:500;
+    border: 1px solid var(--accent); color: var(--accent); margin-top:12px;
+    transition: all .2s;
+  }
+  .project-link:hover { background: var(--accent); color:#fff; }
+
+  /* Responsive */
+  @media (max-width:768px) {
+    .grid2, .grid3, .grid4 { grid-template-columns:1fr; }
+    .hero-name { font-size:32px; }
+    .hero-stats { gap:24px; }
+    nav { gap:16px; padding:0 12px; }
+    nav a { font-size:12px; }
+  }
+
+  /* Dimensions header */
+  .dim-badge {
+    display:inline-block; padding:4px 14px; border-radius:12px; font-size:12px; font-weight:600;
+    margin-bottom:12px;
+  }
+  .dim-1 { background:rgba(91,141,239,.15); color: var(--accent); }
+  .dim-2 { background:rgba(124,92,231,.15); color: var(--accent2); }
+  .dim-3 { background:rgba(46,204,113,.15); color: var(--green); }
+  .dim-4 { background:rgba(240,192,96,.15); color: var(--gold); }
+
+  /* Table */
+  table { width:100%; border-collapse:collapse; font-size:13px; margin: 16px 0; }
+  th { background: var(--bg2); color: var(--accent); padding:10px 12px; text-align:left; font-weight:600; font-size:12px; }
+  td { padding:10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+  tr:hover td { background: rgba(91,141,239,.05); }
+
+  /* STAR card */
+  .star-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-right:4px; }
+  .star-s { background:rgba(91,141,239,.2); color: var(--accent); }
+  .star-t { background:rgba(124,92,231,.2); color: var(--accent2); }
+  .star-a { background:rgba(46,204,113,.2); color: var(--green); }
+  .star-r { background:rgba(240,192,96,.2); color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="#hero">首页</a>
+  <a href="#about">关于我</a>
+  <a href="#skills">能力</a>
+  <a href="#experience">经历</a>
+  <a href="#projects">作品</a>
+  <a href="#contact">联系</a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-avatar">LX</div>
+  <h1 class="hero-name">卢梦潇</h1>
+  <p class="hero-title">游戏运营 / 发行运营 · 2026届应届生</p>
+  <div class="hero-tags">
+    <span>中山大学 · 985</span>
+    <span>英语专八</span>
+    <span>德语微专业</span>
+    <span>出海本地化</span>
+    <span>Steam 4000h+</span>
+    <span>SQL 数据分析</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">2</div><div class="label">段游戏实习</div></div>
+    <div class="hero-stat"><div class="num">10+</div><div class="label">品类覆盖</div></div>
+    <div class="hero-stat"><div class="num">8</div><div class="label">深度报告</div></div>
+    <div class="hero-stat"><div class="num">3</div><div class="label">掌握语言</div></div>
+  </div>
+  <a href="#projects" class="btn-primary">查看作品集</a>
+  <a href="downloads/resume.pdf" class="btn-outline" download>下载简历 PDF</a>
+</section>
+
+<!-- About -->
+<section id="about">
+  <h2 class="section-title">关于我</h2>
+  <p class="section-subtitle">游戏热爱者 × 运营实践者</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>🎓 教育背景</h3>
+      <p style="color:#fff;font-weight:600;">中山大学（985）· 英语专业 · 统招本科</p>
+      <p style="margin-top:8px;">2022.9 - 2026.6 | 主修英语，辅修德语微专业</p>
+      <p>已取得英语专业八级证书（TEM-8），具备德语（250+课时，日常沟通写作）、西班牙语基础交流能力。具备国际视野，适配出海业务本地化需求。</p>
+    </div>
+    <div class="card">
+      <h3>🎮 游戏基因</h3>
+      <ul>
+        <li>Steam 总时长超 <strong style="color:#fff;">4000h</strong>，覆盖 MOBA、FPS、SLG、RPG、体育竞技等 10+ 品类</li>
+        <li>中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人</li>
+        <li>从 0 到 1 组织多场校内电竞比赛，吸引 <strong style="color:#fff;">400+</strong> 玩家线上观赛</li>
+        <li>深度理解不同品类用户偏好，能以玩家视角结合数据驱动优化运营策略</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <h2 class="section-title">核心能力</h2>
+  <p class="section-subtitle">语言 × 运营 × 工具 · 三位一体</p>
+  <div class="grid3">
+    <div class="card">
+      <h3>🌍 语言能力</h3>
+      <div class="skill-bar"><div class="name">英语 · 专业八级（母语级读写听说）</div><div class="bar"><div class="fill" style="width:95%;background:var(--accent);"></div></div></div>
+      <div class="skill-bar"><div class="name">德语 · 250+课时（日常沟通/写作）</div><div class="bar"><div class="fill" style="width:65%;background:var(--accent2);"></div></div></div>
+      <div class="skill-bar"><div class="name">西班牙语 · 基础交流</div><div class="bar"><div class="fill" style="width:35%;background:var(--green);"></div></div></div>
+    </div>
+    <div class="card">
+      <h3>📊 运营能力</h3>
+      <div class="skill-bar"><div class="name">用户洞察与竞品分析</div><div class="bar"><div class="fill" style="width:90%;background:var(--accent);"></div></div></div>
+      <div class="skill-bar"><div class="name">内容文案撰写</div><div class="bar"><div class="fill" style="width:88%;background:var(--accent2);"></div></div></div>
+      <div class="skill-bar"><div class="name">商业化运营</div><div class="bar"><div class="fill" style="width:80%;background:var(--green);"></div></div></div>
+      <div class="skill-bar"><div class="name">跨部门协作与项目管理</div><div class="bar"><div class="fill" style="width:85%;background:var(--gold);"></div></div></div>
+    </div>
+    <div class="card">
+      <h3>🛠️ 工具技能</h3>
+      <div class="skill-bar"><div class="name">SQL · 数据提取与分析</div><div class="bar"><div class="fill" style="width:82%;background:var(--accent);"></div></div></div>
+      <div class="skill-bar"><div class="name">Office / WPS · 数据复盘与报告</div><div class="bar"><div class="fill" style="width:90%;background:var(--accent2);"></div></div></div>
+      <div class="skill-bar"><div class="name">PS / 视频剪辑 · 运营内容制作</div><div class="bar"><div class="fill" style="width:75%;background:var(--green);"></div></div></div>
+      <div class="skill-bar"><div class="name">活动策划与执行</div><div class="bar"><div class="fill" style="width:85%;background:var(--gold);"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <h2 class="section-title">实习与项目经历</h2>
+  <p class="section-subtitle">两段游戏行业实习 + 学术研究项目</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2026.4 - 至今</div>
+      <div class="timeline-title">四三九九网络股份有限公司 · 发行运营管培生</div>
+      <div class="timeline-desc">
+        <strong>发行运营：</strong>了解学习竞品投放策略、买量素材、爆款打法，协同发行研发与多部门筹备运营物料和投放素材。<br>
+        <strong>数据处理：</strong>协助处理区服用户基础数据（DAU/MAU、留存、用户流失）、玩家行为数据和活动专项数据。
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025.7 - 2025.10</div>
+      <div class="timeline-title">广州星辉天拓娱乐有限公司 · 手游运营实习生</div>
+      <div class="timeline-desc">
+        <strong>商业化运营：</strong>参与手游商业化模块，结合竞品调研与用户付费能力分析，参与游戏内道具、外观的定价方案。<br>
+        <strong>内容运营：</strong>独立负责游戏内公告、活动邮件文案撰写与备案，内容验收准确率 100%。<br>
+        <strong>竞品调研：</strong>开展多款同品类头部竞品的全维度调研，输出 3 份深度分析报告；参与新产品创意构思，提出 3 项可行性功能建议，其中 2 项被产品团队采纳。<br>
+        <strong>跨部门协作：</strong>负责对接外部合作团队维护区服生态，协同投放、营销、研发等多部门推进项目首发。
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2024.12 - 2025.12</div>
+      <div class="timeline-title">大学生创新项目 · 海外内容传播与用户洞察项目（核心负责人）</div>
+      <div class="timeline-desc">
+        <strong>项目：</strong>西方大众媒体语境下中国优秀文化输出作品案例分析——以李子柒为例。<br>
+        <strong>职责：</strong>负责小组分工协调，带领团队完成数千条海外用户评论分析、10+ 案例视频内容拆解，输出万字内容书。<br>
+        <strong>成果：</strong>为出海内容用户分层与本地化调整提供数据支撑，项目获评<strong>校级优秀大创项目</strong>。
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2023.9 - 2025.9</div>
+      <div class="timeline-title">中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人</div>
+      <div class="timeline-desc">从 0 到 1 组织多场校内电竞比赛，完成赛制设计、报名宣传流程，覆盖全校参赛玩家，通过社群与校园渠道吸引 400+ 玩家线上观赛。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <h2 class="section-title" style="margin-bottom:8px;">作品集</h2>
+  <p class="section-subtitle">专业基底 · 设计闭环 · 技术前瞻 · 实战运营 — 四大维度覆盖游戏运营全链路</p>
+
+  <!-- Dimension 1 -->
+  <div style="margin-bottom:64px;">
+    <span class="dim-badge dim-1">维度一：专业基底与创新表达</span>
+    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">标准化研究框架 + 多品类覆盖</h3>
+    <div class="grid2">
+      <div class="card">
+        <h3>📐 四维产品评估体系</h3>
+        <p>建立"核心玩法 → 养成循环 → 商业化设计 → 市场表现"标准化框架，对 9 款国内篮球手游完成全维度数据采集与分析，形成可复用的品类模板。</p>
+      </div>
+      <div class="card">
+        <h3>🏀 品类资产矩阵</h3>
+        <p>将篮球手游拆分为 NBA 竞技、街头篮球、经营模拟、动漫 IP 四个子赛道，分别梳理商业化逻辑与用户画像差异，为产品定位提供策略依据。</p>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="projects/basketball-products.html" class="project-link">查看：篮球手游产品调研 →</a>
+      <a href="projects/basketball-compete.html" class="project-link" style="margin-left:8px;">查看：篮球手游目标竞品分析 →</a>
+      <a href="https://docs.qq.com/sheet/DZWdtcktXSmpHVEtq" class="project-link" style="margin-left:8px;" target="_blank">原文档 →</a>
+    </div>
+  </div>
+
+  <!-- Dimension 2 -->
+  <div style="margin-bottom:64px;">
+    <span class="dim-badge dim-2">维度二：设计闭环与玩家洞察</span>
+    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">从数据发现到策略建议的完整链路</h3>
+    <div class="grid2">
+      <div class="card">
+        <h3>🌍 "双线结构 vs 哑铃结构"</h3>
+        <p>通过对 6 个国家/地区的篮球手游市场深度分析，首次发现：国内市场呈"双线结构"（NBA竞技 + 街球），海外市场呈"哑铃结构"（两端强、中间弱），精准识别海外街球品类空白机会。</p>
+      </div>
+      <div class="card">
+        <h3>📊 竞品全链路拆解</h3>
+        <p>对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构、商业化闭环、关键平衡点的完整拆解，输出可落地的差异化策略。</p>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="projects/basketball-overseas.html" class="project-link">查看：海外篮球手游赛道深度调研 →</a>
+      <a href="projects/basketball-domestic.html" class="project-link" style="margin-left:8px;">查看：国内外篮球手游对比分析 →</a>
+    </div>
+  </div>
+
+  <!-- Dimension 3 -->
+  <div style="margin-bottom:64px;">
+    <span class="dim-badge dim-3">维度三：技术前瞻与文化赋能</span>
+    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">跨品类视野 + 六维深度拆解</h3>
+    <div class="grid3">
+      <div class="card">
+        <h3>❄️ 《无尽冬日》拆解</h3>
+        <p>六维全链路 SLG 分析（市场→美术→玩法→养成→社交→商业化），还原"环境压迫性设计"与"卡点控制策略"的底层逻辑，29+ 页完整报告。</p>
+      </div>
+      <div class="card">
+        <h3>⚔️ 《王者荣耀》分析</h3>
+        <p>经济系统平衡机制、皮肤"文化叙事+限定稀缺+社交展示"三维价值模型、社交-战斗融合设计深度分析。</p>
+      </div>
+      <div class="card">
+        <h3>🏯 《主宰世界》拆解</h3>
+        <p>多维度产品拆解报告，覆盖核心玩法循环、经济系统、付费转化链路分析，为同类产品立项提供参考。</p>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="projects/endless-winter.html" class="project-link">查看：无尽冬日拆解 →</a>
+      <a href="projects/honor-of-kings.html" class="project-link" style="margin-left:8px;">查看：王者荣耀分析 →</a>
+      <a href="projects/zhuzai-world.html" class="project-link" style="margin-left:8px;">查看：主宰世界拆解 →</a>
+    </div>
+  </div>
+
+  <!-- Dimension 4 -->
+  <div style="margin-bottom:48px;">
+    <span class="dim-badge dim-4">维度四：实战运营</span>
+    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">从策略到执行的全流程运营能力</h3>
+    <div class="grid2">
+      <div class="card">
+        <h3>📅 精细化活动运营</h3>
+        <p>对某滚服 RPG 完成 17 个活动的逐日拆解，归纳三段式上线节奏：预热期（第1天）→ 核心期（第2-5天）→ 收尾期（第6-7天），输出商业化排期优化建议。</p>
+      </div>
+      <div class="card">
+        <h3>📢 运营公告模板体系</h3>
+        <p>建立 5 类场景（故障应急/公测上线/版本更新/服务器回档/反外挂声明）的完整公告模板，每类 2-3 个版本，提炼"三层情感结构"与"分层补偿设计"方法论。</p>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="projects/rpg-operations.html" class="project-link">查看：精细化活动运营 →</a>
+      <a href="projects/announcements.html" class="project-link" style="margin-left:8px;">查看：运营公告体系 →</a>
+      <a href="projects/slg-activities.html" class="project-link" style="margin-left:8px;">查看：SLG竞品活动收集 →</a>
+    </div>
+  </div>
+
+  <!-- STAR Projects Summary -->
+  <h2 class="section-title" style="margin-top:48px;">STAR 项目精选</h2>
+  <p class="section-subtitle">以资深面试官视角呈现的 6 个核心项目，每个项目均用 STAR 法则详细说明个人核心作用</p>
+  
+  <div class="grid2">
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">海外篮球手游赛道深度调研</h3>
+      <p><strong>S：</strong>公司产品团队需要评估篮球手游出海可行性，但缺乏海外市场的系统数据支撑。</p>
+      <p><strong>T：</strong>独立完成海外篮球手游赛道的全维度调研，覆盖 6 个国家、6 款核心竞品。</p>
+      <p><strong>A：</strong>建立多维度数据采集框架，通过对下载量、收入、RPD、评分等指标的交叉分析，率先识别出"哑铃结构"。</p>
+      <p><strong>R：</strong>产出 20+ 页深度调研报告，核心发现"哑铃结构"影响产品立项方向讨论，为出海策略提供关键数据支撑。</p>
+      <a href="projects/basketball-overseas.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">《无尽冬日》全链路产品拆解</h3>
+      <p><strong>S：</strong>团队需要对 SLG 品类建立系统化的分析框架，为公司 SLG 新品立项提供参考。</p>
+      <p><strong>T：</strong>独立完成一头部 SLG 产品的六维全链路拆解，将其设计逻辑提炼为可复用的方法论。</p>
+      <p><strong>A：</strong>建立"市场→美术→玩法→养成→社交→商业化"六维分析框架，重点揭示"环境压迫性设计"与"卡点控制策略"。</p>
+      <p><strong>R：</strong>29+ 页完整拆解报告，成为团队 SLG 品类研究的基准参考文档，分析框架被后续多份调研复用。</p>
+      <a href="projects/endless-winter.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">SLG 竞品活动对标分析</h3>
+      <p><strong>S：</strong>项目组需要系统了解 SLG 品类头部产品的活动运营策略，为自有产品活动体系搭建提供依据。</p>
+      <p><strong>T：</strong>完成 7 款头部 SLG 产品的竞品活动全量收集与分类对标。</p>
+      <p><strong>A：</strong>收集 70+ 活动案例，按活动类型、上线节奏、付费设计三维度分类，对比"IP联动"与"内生内容"两种模式。</p>
+      <p><strong>R：</strong>建立可检索的活动数据库，输出活动策略对比分析报告，为项目组活动设计提供直接参考。</p>
+      <a href="projects/slg-activities.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">RPG 精细化活动运营分析</h3>
+      <p><strong>S：</strong>运营团队需要优化某滚服 RPG 的活动排期与商业化节奏，但缺乏系统化的活动节奏分析方法。</p>
+      <p><strong>T：</strong>对 17 个活动完成逐日拆解，输出活动节奏分析与商业化策略建议。</p>
+      <p><strong>A：</strong>归纳三段式上线节奏（预热→核心→收尾），分析各阶段商业化节点与玩家心理匹配度，并完成与7款SLG竞品的活动模式对标。</p>
+      <p><strong>R：</strong>提出的"四段式"活动节奏被运营团队采纳为后续活动排期参考模板，目前该表以 57% 完读率被持续高频查阅。</p>
+      <a href="projects/rpg-operations.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">运营公告模板体系建设</h3>
+      <p><strong>S：</strong>项目在不同运营场景下公告风格不一致，玩家情绪管理效果参差不齐，缺乏可复用的标准化模板。</p>
+      <p><strong>T：</strong>建立 5 类核心场景的运营公告标准化模板体系。</p>
+      <p><strong>A：</strong>针对故障应急（3版本）、公测上线（3版本）、版本更新、服务器回档（3版本）、反外挂声明（2版本）各场景，提炼"三层情感结构"（共情→解释→补偿）与"IP一致性表达"原则。</p>
+      <p><strong>R：</strong>10+ 版本模板被运营团队直接复用，公告撰写效率提升显著，玩家情绪管理效果明显改善。</p>
+      <a href="projects/announcements.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">篮球手游竞品深度拆解</h3>
+      <p><strong>S：</strong>公司新品立项阶段，需要判断篮球手游市场的竞争格局与差异化空间。</p>
+      <p><strong>T：</strong>对核心竞品完成全维度拆解，输出差异化策略建议。</p>
+      <p><strong>A：</strong>对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构→商业化闭环→关键平衡点的完整拆解，提出数值公平性平衡判断。</p>
+      <p><strong>R：</strong>拆解结论影响产品定位讨论，提出的"公平竞技+轻度养成"方向获得团队认可。</p>
+      <a href="projects/basketball-compete.html" class="project-link">查看详情 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2 class="section-title">联系我</h2>
+  <p class="section-subtitle">期待与你的交流</p>
+  <div class="grid2" style="max-width:600px;margin:0 auto;">
+    <div class="contact-item">
+      <div class="icon">📧</div>
+      <div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">邮箱</div>
+        <div class="val">2876537460@qq.com</div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="icon">💬</div>
+      <div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">微信</div>
+        <div class="val">15181981772</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 卢梦潇 · 中山大学 · 游戏运营</p>
+  <p style="margin-top:4px;">Built with passion for games. Last updated: June 2026</p>
+</footer>
+
+</body>
+</html>
