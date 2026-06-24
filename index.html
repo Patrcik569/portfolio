@@ -4,7 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>卢梦潇 | 游戏运营 · 个人主页</title>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║                    个人主页 · 编辑指南                          ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║                                                                ║
+  ║  本文件分为两大区域：                                            ║
+  ║                                                                ║
+  ║  1️⃣  【内容配置区】(第 ~50-300 行)                              ║
+  ║     → 所有文字、链接、数据都在 SITE_DATA 对象里                 ║
+  ║     → 只改这里就能更新页面内容，不需要懂 HTML                    ║
+  ║     → 每个字段都有中文注释说明                                   ║
+  ║                                                                ║
+  ║  2️⃣  【样式与逻辑区】(第 ~300 行之后)                           ║
+  ║     → CSS 样式、页面渲染、交互功能                              ║
+  ║     → 一般不需要修改                                            ║
+  ║                                                                ║
+  ║  常见修改场景：                                                  ║
+  ║  • 改名字/职位    → SITE_DATA.profile                           ║
+  ║  • 改联系方式     → SITE_DATA.contact                           ║
+  ║  • 加/删经历      → SITE_DATA.experience 数组                   ║
+  ║  • 加/删作品      → SITE_DATA.dimensions 数组                   ║
+  ║  • 加/删STAR项目  → SITE_DATA.stars 数组                        ║
+  ║  • 改主题色       → :root 里的 CSS 变量                         ║
+  ║                                                                ║
+  ║  修改后保存，推送到 GitHub 仓库即可生效。                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+
 <style>
+  /* ===== 主题色配置（改这里就能换配色方案） ===== */
   :root {
     --bg: #0a0a14;
     --bg2: #111122;
@@ -20,41 +50,73 @@
     --cyan: #22d3ee;
     --radius: 12px;
     --radius-sm: 8px;
+    --nav-h: 52px;
   }
+  /* 浅色主题 */
+  [data-theme="light"] {
+    --bg: #f5f5f8;
+    --bg2: #ebebf0;
+    --card: #ffffff;
+    --border: #d8d8e0;
+    --text: #1a1a2e;
+    --text2: #666680;
+    --accent: #3b6fd6;
+    --accent2: #6c4cd7;
+    --green: #1aab5e;
+    --gold: #c89020;
+    --red: #cc4444;
+    --cyan: #0891b2;
+  }
+
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     background: var(--bg); color: var(--text); line-height: 1.7;
+    transition: background .3s, color .3s;
   }
   a { color: var(--accent); text-decoration:none; transition:color .2s; }
   a:hover { color: var(--accent2); }
 
-  /* Nav */
+  /* ===== 导航栏 ===== */
   nav {
     position:fixed; top:0; left:0; right:0; z-index:100;
     background: rgba(10,10,20,.92); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border); padding: 0 24px;
-    display:flex; align-items:center; justify-content:center; height:52px; gap:28px;
+    display:flex; align-items:center; justify-content:center; height:var(--nav-h); gap:28px;
+    transition: background .3s;
   }
+  [data-theme="light"] nav { background: rgba(245,245,248,.92); }
   nav a { color: var(--text2); font-size:13px; font-weight:500; padding:6px 0; border-bottom:2px solid transparent; transition:all .2s; }
   nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* Sections */
+  /* 导航栏右侧工具按钮 */
+  .nav-tools { position:absolute; right:16px; display:flex; gap:8px; }
+  .nav-btn {
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--border);
+    background: var(--card); color: var(--text2); cursor:pointer; font-size:16px;
+    display:flex; align-items:center; justify-content:center; transition: all .2s;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* 移动端汉堡菜单 */
+  .menu-toggle { display:none; }
+
+  /* ===== Section 通用 ===== */
   section { max-width: 1000px; margin:0 auto; padding: 80px 24px; }
   section:first-of-type { padding-top: 120px; }
-  .section-title {
-    font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 8px; text-align: center;
-  }
+  .section-title { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; text-align: center; }
+  [data-theme="light"] .section-title { color: #1a1a2e; }
   .section-subtitle { text-align:center; color: var(--text2); font-size:15px; margin-bottom: 48px; }
 
-  /* Hero */
+  /* ===== Hero ===== */
   #hero { text-align:center; }
   .hero-avatar {
     width:120px; height:120px; border-radius:50%; background: linear-gradient(135deg, var(--accent), var(--accent2));
     margin:0 auto 24px; display:flex; align-items:center; justify-content:center; font-size:48px; color:#fff; font-weight:700;
   }
   .hero-name { font-size: 42px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  [data-theme="light"] .hero-name { color: #1a1a2e; }
   .hero-title { font-size: 20px; color: var(--accent); margin-bottom: 16px; font-weight: 500; }
   .hero-tags { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom: 32px; }
   .hero-tags span {
@@ -77,23 +139,24 @@
   }
   .btn-outline:hover { background: var(--accent); color:#fff; }
 
-  /* Cards */
+  /* ===== 卡片 ===== */
   .card {
     background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
     padding: 28px; transition: all .25s;
   }
   .card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .card h3 { font-size:18px; color:#fff; margin-bottom:12px; }
+  [data-theme="light"] .card h3 { color: #1a1a2e; }
   .card p, .card li { font-size:14px; color: var(--text2); line-height:1.8; }
   .card ul { padding-left:18px; }
   .card .highlight { color: var(--accent); font-weight: 600; }
 
-  /* Two-column */
+  /* Grid */
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
   .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
 
-  /* Timeline */
+  /* ===== Timeline ===== */
   .timeline { position:relative; padding-left:32px; }
   .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background: var(--border); }
   .timeline-item { position:relative; margin-bottom:36px; }
@@ -103,27 +166,30 @@
   }
   .timeline-date { font-size:13px; color: var(--accent); font-weight:600; margin-bottom:4px; }
   .timeline-title { font-size:17px; color:#fff; font-weight:600; margin-bottom:6px; }
+  [data-theme="light"] .timeline-title { color: #1a1a2e; }
   .timeline-sub { font-size:14px; color: var(--text2); }
   .timeline-desc { font-size:13px; color: var(--text2); margin-top:8px; line-height:1.8; }
 
-  /* Skills */
+  /* ===== 技能条 ===== */
   .skill-bar { margin-bottom:16px; }
   .skill-bar .name { font-size:14px; color:#fff; margin-bottom:6px; font-weight:500; }
+  [data-theme="light"] .skill-bar .name { color: #1a1a2e; }
   .skill-bar .bar { height:6px; background: var(--border); border-radius:3px; overflow:hidden; }
-  .skill-bar .bar .fill { height:100%; border-radius:3px; transition:width 1s ease; }
+  .skill-bar .bar .fill { height:100%; border-radius:3px; width:0; transition:width 1.2s ease; }
 
-  /* Contact */
+  /* ===== 联系方式 ===== */
   .contact-item {
     display:flex; align-items:center; gap:12px; padding:16px 20px;
     background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
   }
   .contact-item .icon { font-size:24px; }
   .contact-item .val { font-size:15px; color:#fff; }
+  [data-theme="light"] .contact-item .val { color: #1a1a2e; }
 
-  /* Footer */
+  /* ===== Footer ===== */
   footer { text-align:center; padding:40px 24px; color: var(--text2); font-size:13px; border-top:1px solid var(--border); }
 
-  /* Detail page link */
+  /* ===== 项目链接 ===== */
   .project-link {
     display:inline-block; padding:8px 20px; border-radius:20px; font-size:13px; font-weight:500;
     border: 1px solid var(--accent); color: var(--accent); margin-top:12px;
@@ -131,16 +197,7 @@
   }
   .project-link:hover { background: var(--accent); color:#fff; }
 
-  /* Responsive */
-  @media (max-width:768px) {
-    .grid2, .grid3, .grid4 { grid-template-columns:1fr; }
-    .hero-name { font-size:32px; }
-    .hero-stats { gap:20px; }
-    nav { gap:12px; padding:0 8px; }
-    nav a { font-size:11px; }
-  }
-
-  /* Dimensions header */
+  /* ===== 维度标签 ===== */
   .dim-badge {
     display:inline-block; padding:4px 14px; border-radius:12px; font-size:12px; font-weight:600;
     margin-bottom:12px;
@@ -151,28 +208,29 @@
   .dim-4 { background:rgba(240,192,96,.15); color: var(--gold); }
   .dim-5 { background:rgba(34,211,238,.15); color: var(--cyan); }
 
-  /* Table */
+  /* ===== 表格 ===== */
   table { width:100%; border-collapse:collapse; font-size:13px; margin: 12px 0; }
   th { background: var(--bg2); color: var(--accent); padding:10px 12px; text-align:left; font-weight:600; font-size:12px; }
   td { padding:10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
   tr:hover td { background: rgba(91,141,239,.05); }
 
-  /* STAR card */
+  /* ===== STAR 卡片 ===== */
   .star-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-right:4px; }
   .star-s { background:rgba(91,141,239,.2); color: var(--accent); }
   .star-t { background:rgba(124,92,231,.2); color: var(--accent2); }
   .star-a { background:rgba(46,204,113,.2); color: var(--green); }
   .star-r { background:rgba(240,192,96,.2); color: var(--gold); }
 
-  /* Content detail block */
+  /* ===== 内容详情块 ===== */
   .detail-block {
     background: var(--bg2); border-radius: var(--radius-sm); padding: 20px; margin-top: 16px;
     border-left: 3px solid var(--accent);
   }
   .detail-block h4 { font-size:15px; color:#fff; margin-bottom:10px; }
+  [data-theme="light"] .detail-block h4 { color: #1a1a2e; }
   .detail-block p { font-size:13px; color: var(--text2); line-height:1.8; }
 
-  /* KPI highlight */
+  /* KPI */
   .kpi-row { display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0; }
   .kpi-item {
     background: var(--bg2); border-radius: var(--radius-sm); padding: 12px 16px; text-align:center; flex:1; min-width:120px;
@@ -180,7 +238,7 @@
   .kpi-item .kpi-num { font-size:22px; font-weight:800; color: var(--accent); }
   .kpi-item .kpi-label { font-size:12px; color: var(--text2); margin-top:4px; }
 
-  /* Doc link badge */
+  /* 文档徽章 */
   .doc-badge {
     display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px;
     font-size:12px; font-weight:500; background: rgba(91,141,239,.1); border:1px solid rgba(91,141,239,.3);
@@ -188,498 +246,954 @@
   }
   .doc-badge:hover { background: rgba(91,141,239,.2); }
 
-  /* Method tag */
+  /* 方法标签 */
   .method-tag {
     display:inline-block; padding:3px 10px; border-radius:6px; font-size:12px; font-weight:500;
     margin: 3px 3px; background: var(--bg2); border:1px solid var(--border); color: var(--text2);
+  }
+
+  /* ===== 回到顶部按钮 ===== */
+  #back-to-top {
+    position:fixed; bottom:32px; right:32px; width:44px; height:44px; border-radius:50%;
+    background: var(--accent); color:#fff; border:none; cursor:pointer; font-size:20px;
+    display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden;
+    transition: all .3s; z-index:90; box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  }
+  #back-to-top.visible { opacity:1; visibility:visible; }
+  #back-to-top:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  /* ===== 滚动动画 ===== */
+  .reveal { opacity:0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform: translateY(0); }
+
+  /* ===== STAR 筛选按钮 ===== */
+  .filter-bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:32px; }
+  .filter-btn {
+    padding:6px 18px; border-radius:20px; font-size:13px; font-weight:500; cursor:pointer;
+    border:1px solid var(--border); background: var(--card); color: var(--text2); transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color:#fff; border-color: var(--accent); }
+
+  /* ===== 加载动画 ===== */
+  #loader {
+    position:fixed; inset:0; z-index:9999; background: var(--bg);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px;
+    transition: opacity .5s; 
+  }
+  #loader.hidden { opacity:0; pointer-events:none; }
+  .loader-ring {
+    width:48px; height:48px; border:3px solid var(--border); border-top-color: var(--accent);
+    border-radius:50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== 响应式 ===== */
+  @media (max-width:768px) {
+    .grid2, .grid3, .grid4 { grid-template-columns:1fr; }
+    .hero-name { font-size:32px; }
+    .hero-stats { gap:20px; }
+    nav { gap:12px; padding:0 8px; }
+    nav a { font-size:11px; }
+    .nav-tools { right:8px; }
+    .nav-btn { width:30px; height:30px; font-size:14px; }
+    section { padding: 60px 16px; }
+    section:first-of-type { padding-top: 100px; }
+    #back-to-top { bottom:20px; right:20px; }
+  }
+
+  /* ===== 打印样式 ===== */
+  @media print {
+    nav, #back-to-top, .nav-tools, .filter-bar, #loader { display:none !important; }
+    body { background:#fff; color:#000; }
+    .card { border:1px solid #ccc; break-inside:avoid; }
+    section { padding: 20px 0; }
+    .reveal { opacity:1 !important; transform:none !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav>
+<!-- 加载动画 -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <p style="color:var(--text2);font-size:14px;">加载中...</p>
+</div>
+
+<!-- 导航栏 -->
+<nav id="navbar">
   <a href="#hero">首页</a>
   <a href="#about">关于我</a>
   <a href="#skills">能力</a>
   <a href="#experience">经历</a>
   <a href="#projects">作品</a>
   <a href="#contact">联系</a>
+  <div class="nav-tools">
+    <button class="nav-btn" id="theme-toggle" title="切换主题">🌙</button>
+    <button class="nav-btn" id="print-btn" title="打印/导出PDF">🖨️</button>
+  </div>
 </nav>
 
-<!-- Hero -->
-<section id="hero">
-  <div class="hero-avatar">LX</div>
-  <h1 class="hero-name">卢梦潇</h1>
-  <p class="hero-title">游戏运营 / 发行运营 · 2026届应届生</p>
-  <div class="hero-tags">
-    <span>中山大学 · 985</span>
-    <span>英语专八</span>
-    <span>德语微专业</span>
-    <span>出海本地化</span>
-    <span>Steam 4000h+</span>
-    <span>SQL 数据分析</span>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat"><div class="num">2</div><div class="label">段游戏实习</div></div>
-    <div class="hero-stat"><div class="num">10+</div><div class="label">品类覆盖</div></div>
-    <div class="hero-stat"><div class="num">10+</div><div class="label">深度报告</div></div>
-    <div class="hero-stat"><div class="num">5+</div><div class="label">运营方案</div></div>
-    <div class="hero-stat"><div class="num">3</div><div class="label">掌握语言</div></div>
-  </div>
-  <a href="#projects" class="btn-primary">查看作品集</a>
-  <a href="downloads/resume.pdf" class="btn-outline" download>下载简历 PDF</a>
-</section>
+<!-- 页面内容由 JS 自动渲染 -->
+<main id="app"></main>
 
-<!-- About -->
-<section id="about">
-  <h2 class="section-title">关于我</h2>
-  <p class="section-subtitle">游戏热爱者 × 运营实践者</p>
-  <div class="grid2">
-    <div class="card">
-      <h3>🎓 教育背景</h3>
-      <p style="color:#fff;font-weight:600;">中山大学（985）· 英语专业 · 统招本科</p>
-      <p style="margin-top:8px;">2022.9 - 2026.6 | 主修英语，辅修德语微专业</p>
-      <p>已取得英语专业八级证书（TEM-8），具备德语（250+课时，日常沟通写作）、西班牙语基础交流能力。具备国际视野，适配出海业务本地化需求。</p>
-    </div>
-    <div class="card">
-      <h3>🎮 游戏基因</h3>
-      <ul>
-        <li>Steam 总时长超 <strong style="color:#fff;">4000h</strong>，覆盖 MOBA、FPS、SLG、RPG、体育竞技等 10+ 品类</li>
-        <li>中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人</li>
-        <li>从 0 到 1 组织多场校内电竞比赛，吸引 <strong style="color:#fff;">400+</strong> 玩家线上观赛</li>
-        <li>深度理解不同品类用户偏好，能以玩家视角结合数据驱动优化运营策略</li>
-      </ul>
-    </div>
-  </div>
-</section>
+<!-- 回到顶部 -->
+<button id="back-to-top" title="回到顶部">↑</button>
 
-<!-- Skills -->
-<section id="skills">
-  <h2 class="section-title">核心能力</h2>
-  <p class="section-subtitle">语言 × 运营 × 工具 · 三位一体</p>
-  <div class="grid3">
-    <div class="card">
-      <h3>🌍 语言能力</h3>
-      <div class="skill-bar"><div class="name">英语 · 专业八级（母语级读写听说）</div><div class="bar"><div class="fill" style="width:95%;background:var(--accent);"></div></div></div>
-      <div class="skill-bar"><div class="name">德语 · 250+课时（日常沟通/写作）</div><div class="bar"><div class="fill" style="width:65%;background:var(--accent2);"></div></div></div>
-      <div class="skill-bar"><div class="name">西班牙语 · 基础交流</div><div class="bar"><div class="fill" style="width:35%;background:var(--green);"></div></div></div>
-    </div>
-    <div class="card">
-      <h3>📊 运营能力</h3>
-      <div class="skill-bar"><div class="name">用户洞察与竞品分析</div><div class="bar"><div class="fill" style="width:90%;background:var(--accent);"></div></div></div>
-      <div class="skill-bar"><div class="name">内容文案撰写</div><div class="bar"><div class="fill" style="width:88%;background:var(--accent2);"></div></div></div>
-      <div class="skill-bar"><div class="name">商业化运营与定价策略</div><div class="bar"><div class="fill" style="width:85%;background:var(--green);"></div></div></div>
-      <div class="skill-bar"><div class="name">SOP体系建设与项目管理</div><div class="bar"><div class="fill" style="width:87%;background:var(--gold);"></div></div></div>
-    </div>
-    <div class="card">
-      <h3>🛠️ 工具技能</h3>
-      <div class="skill-bar"><div class="name">SQL · 数据提取与分析</div><div class="bar"><div class="fill" style="width:82%;background:var(--accent);"></div></div></div>
-      <div class="skill-bar"><div class="name">Office / WPS · 数据复盘与报告</div><div class="bar"><div class="fill" style="width:90%;background:var(--accent2);"></div></div></div>
-      <div class="skill-bar"><div class="name">PS / 视频剪辑 · 运营内容制作</div><div class="bar"><div class="fill" style="width:75%;background:var(--green);"></div></div></div>
-      <div class="skill-bar"><div class="name">活动策划与执行</div><div class="bar"><div class="fill" style="width:85%;background:var(--gold);"></div></div></div>
-    </div>
-  </div>
-</section>
+<script>
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║                                                              ║
+   ║              📝 内容配置区 — 修改这里更新页面                  ║
+   ║                                                              ║
+   ║  所有页面内容都在下面的 SITE_DATA 对象里。                     ║
+   ║  找到对应部分，修改文字即可。                                  ║
+   ║  数组 [...] 里加/删条目就能增减内容。                          ║
+   ║                                                              ║
+   ╚══════════════════════════════════════════════════════════════╝ */
 
-<!-- Experience -->
-<section id="experience">
-  <h2 class="section-title">实习与项目经历</h2>
-  <p class="section-subtitle">两段游戏行业实习 + 学术研究项目</p>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-date">2026.4 - 至今</div>
-      <div class="timeline-title">四三九九网络股份有限公司 · 发行运营管培生</div>
-      <div class="timeline-desc">
-        <strong>发行运营：</strong>了解学习竞品投放策略、买量素材、爆款打法，协同发行研发与多部门筹备运营物料和投放素材。<br>
-        <strong>数据处理：</strong>协助处理区服用户基础数据（DAU/MAU、留存、用户流失）、玩家行为数据和活动专项数据。<br>
-        <strong>陪玩业务运营：</strong>主导《三角洲行动》手游陪玩业务从 0 到 1 搭建，独立完成业务方案、产品定价体系、招募考核SOP、大神挖角计划及全流程标准化运营文档，覆盖供给端招募考核、需求侧推广转化、品控客服与风险控制全链路。
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2025.7 - 2025.10</div>
-      <div class="timeline-title">广州星辉天拓娱乐有限公司 · 手游运营实习生</div>
-      <div class="timeline-desc">
-        <strong>商业化运营：</strong>参与手游商业化模块，结合竞品调研与用户付费能力分析，参与游戏内道具、外观的定价方案。<br>
-        <strong>内容运营：</strong>独立负责游戏内公告、活动邮件文案撰写与备案，内容验收准确率 100%；建立 5 类场景 10+ 版本运营公告模板体系。<br>
-        <strong>竞品调研：</strong>开展多款同品类头部竞品的全维度调研，输出 3 份深度分析报告（《无尽冬日》29+页、《三国群英传：策定九州》37+页等）；参与新产品创意构思，提出 3 项可行性功能建议，其中 2 项被产品团队采纳。<br>
-        <strong>跨部门协作：</strong>负责对接外部合作团队维护区服生态，协同投放、营销、研发等多部门推进项目首发。
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2024.12 - 2025.12</div>
-      <div class="timeline-title">大学生创新项目 · 海外内容传播与用户洞察项目（核心负责人）</div>
-      <div class="timeline-desc">
-        <strong>项目：</strong>西方大众媒体语境下中国优秀文化输出作品案例分析——以李子柒为例。<br>
-        <strong>职责：</strong>负责小组分工协调，带领团队完成数千条海外用户评论分析、10+ 案例视频内容拆解，输出万字内容书。<br>
-        <strong>成果：</strong>为出海内容用户分层与本地化调整提供数据支撑，项目获评<strong>校级优秀大创项目</strong>。
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2023.9 - 2025.9</div>
-      <div class="timeline-title">中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人</div>
-      <div class="timeline-desc">从 0 到 1 组织多场校内电竞比赛，完成赛制设计、报名宣传流程，覆盖全校参赛玩家，通过社群与校园渠道吸引 400+ 玩家线上观赛。</div>
-    </div>
-  </div>
-</section>
+const SITE_DATA = {
 
-<!-- Projects -->
-<section id="projects">
-  <h2 class="section-title" style="margin-bottom:8px;">作品集</h2>
-  <p class="section-subtitle">专业基底 · 设计闭环 · 技术前瞻 · 实战运营 · 商业化增长 — 五大维度覆盖游戏运营全链路</p>
+  /* ── 个人信息（Hero 区域） ── */
+  profile: {
+    avatar: "LX",                          // 头像文字（取姓名首字母）
+    name: "卢梦潇",
+    title: "游戏运营 / 发行运营 · 2026届应届生",
+    tags: [                                // 标签，随意增减
+      "中山大学 · 985", "英语专八", "德语微专业",
+      "出海本地化", "Steam 4000h+", "SQL 数据分析"
+    ],
+    stats: [                               // 统计数字，num=数字, label=标签
+      { num: "2",    label: "段游戏实习" },
+      { num: "10+",  label: "品类覆盖" },
+      { num: "10+",  label: "深度报告" },
+      { num: "5+",   label: "运营方案" },
+      { num: "3",    label: "掌握语言" }
+    ],
+    resumeUrl: "downloads/resume.pdf",     // 简历 PDF 路径
+    projectsBtnText: "查看作品集",
+    resumeBtnText: "下载简历 PDF"
+  },
 
-  <!-- Dimension 1 -->
-  <div style="margin-bottom:64px;">
-    <span class="dim-badge dim-1">维度一：专业基底与创新表达</span>
-    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">标准化研究框架 + 多品类覆盖</h3>
+  /* ── 关于我 ── */
+  about: {
+    title: "关于我",
+    subtitle: "游戏热爱者 × 运营实践者",
+    cards: [
+      {
+        icon: "🎓", title: "教育背景",
+        content: [
+          { type: "highlight", text: "中山大学（985）· 英语专业 · 统招本科" },
+          { type: "text", text: "2022.9 - 2026.6 | 主修英语，辅修德语微专业" },
+          { type: "text", text: "已取得英语专业八级证书（TEM-8），具备德语（250+课时，日常沟通写作）、西班牙语基础交流能力。具备国际视野，适配出海业务本地化需求。" }
+        ]
+      },
+      {
+        icon: "🎮", title: "游戏基因",
+        content: [
+          { type: "list", items: [
+            "Steam 总时长超 **4000h**，覆盖 MOBA、FPS、SLG、RPG、体育竞技等 10+ 品类",
+            "中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人",
+            "从 0 到 1 组织多场校内电竞比赛，吸引 **400+** 玩家线上观赛",
+            "深度理解不同品类用户偏好，能以玩家视角结合数据驱动优化运营策略"
+          ]}
+        ]
+      }
+    ]
+  },
+
+  /* ── 核心能力 ── */
+  skills: {
+    title: "核心能力",
+    subtitle: "语言 × 运营 × 工具 · 三位一体",
+    groups: [
+      {
+        icon: "🌍", title: "语言能力",
+        bars: [
+          { name: "英语 · 专业八级（母语级读写听说）", level: 95, color: "var(--accent)" },
+          { name: "德语 · 250+课时（日常沟通/写作）", level: 65, color: "var(--accent2)" },
+          { name: "西班牙语 · 基础交流", level: 35, color: "var(--green)" }
+        ]
+      },
+      {
+        icon: "📊", title: "运营能力",
+        bars: [
+          { name: "用户洞察与竞品分析", level: 90, color: "var(--accent)" },
+          { name: "内容文案撰写", level: 88, color: "var(--accent2)" },
+          { name: "商业化运营与定价策略", level: 85, color: "var(--green)" },
+          { name: "SOP体系建设与项目管理", level: 87, color: "var(--gold)" }
+        ]
+      },
+      {
+        icon: "🛠️", title: "工具技能",
+        bars: [
+          { name: "SQL · 数据提取与分析", level: 82, color: "var(--accent)" },
+          { name: "Office / WPS · 数据复盘与报告", level: 90, color: "var(--accent2)" },
+          { name: "PS / 视频剪辑 · 运营内容制作", level: 75, color: "var(--green)" },
+          { name: "活动策划与执行", level: 85, color: "var(--gold)" }
+        ]
+      }
+    ]
+  },
+
+  /* ── 实习与项目经历（时间线） ── */
+  experience: {
+    title: "实习与项目经历",
+    subtitle: "两段游戏行业实习 + 学术研究项目",
+    items: [
+      {
+        date: "2026.4 - 至今",
+        title: "四三九九网络股份有限公司 · 发行运营管培生",
+        desc: [
+          { label: "发行运营：", text: "了解学习竞品投放策略、买量素材、爆款打法，协同发行研发与多部门筹备运营物料和投放素材。" },
+          { label: "数据处理：", text: "协助处理区服用户基础数据（DAU/MAU、留存、用户流失）、玩家行为数据和活动专项数据。" },
+          { label: "陪玩业务运营：", text: "主导《三角洲行动》手游陪玩业务从 0 到 1 搭建，独立完成业务方案、产品定价体系、招募考核SOP、大神挖角计划及全流程标准化运营文档，覆盖供给端招募考核、需求侧推广转化、品控客服与风险控制全链路。" }
+        ]
+      },
+      {
+        date: "2025.7 - 2025.10",
+        title: "广州星辉天拓娱乐有限公司 · 手游运营实习生",
+        desc: [
+          { label: "商业化运营：", text: "参与手游商业化模块，结合竞品调研与用户付费能力分析，参与游戏内道具、外观的定价方案。" },
+          { label: "内容运营：", text: "独立负责游戏内公告、活动邮件文案撰写与备案，内容验收准确率 100%；建立 5 类场景 10+ 版本运营公告模板体系。" },
+          { label: "竞品调研：", text: "开展多款同品类头部竞品的全维度调研，输出 3 份深度分析报告（《无尽冬日》29+页、《三国群英传：策定九州》37+页等）；参与新产品创意构思，提出 3 项可行性功能建议，其中 2 项被产品团队采纳。" },
+          { label: "跨部门协作：", text: "负责对接外部合作团队维护区服生态，协同投放、营销、研发等多部门推进项目首发。" }
+        ]
+      },
+      {
+        date: "2024.12 - 2025.12",
+        title: "大学生创新项目 · 海外内容传播与用户洞察项目（核心负责人）",
+        desc: [
+          { label: "项目：", text: "西方大众媒体语境下中国优秀文化输出作品案例分析——以李子柒为例。" },
+          { label: "职责：", text: "负责小组分工协调，带领团队完成数千条海外用户评论分析、10+ 案例视频内容拆解，输出万字内容书。" },
+          { label: "成果：", text: "为出海内容用户分层与本地化调整提供数据支撑，项目获评**校级优秀大创项目**。" }
+        ]
+      },
+      {
+        date: "2023.9 - 2025.9",
+        title: "中山大学游戏社团 · 瓦罗兰特分部珠海校区负责人",
+        desc: "从 0 到 1 组织多场校内电竞比赛，完成赛制设计、报名宣传流程，覆盖全校参赛玩家，通过社群与校园渠道吸引 400+ 玩家线上观赛。"
+      }
+    ]
+  },
+
+  /* ── 作品集（五大维度） ── */
+  projects: {
+    title: "作品集",
+    subtitle: "专业基底 · 设计闭环 · 技术前瞻 · 实战运营 · 商业化增长 — 五大维度覆盖游戏运营全链路",
+    dimensions: [
+      /* 维度一 */
+      {
+        dimClass: "dim-1", dimLabel: "维度一：专业基底与创新表达",
+        heading: "标准化研究框架 + 多品类覆盖",
+        cards: [
+          { icon: "📐", title: "四维产品评估体系",
+            text: '建立"核心玩法 → 养成循环 → 商业化设计 → 市场表现"标准化框架，对 9 款国内篮球手游完成全维度数据采集与分析，形成可复用的品类模板。'
+          },
+          { icon: "🏀", title: "品类资产矩阵",
+            text: '将篮球手游拆分为 NBA 竞技、街头篮球、经营模拟、动漫 IP 四个子赛道，分别梳理商业化逻辑与用户画像差异，为产品定位提供策略依据。'
+          }
+        ],
+        links: [
+          { text: "查看：篮球手游产品调研 →", url: "projects/basketball-products.html" },
+          { text: "查看：篮球手游目标竞品分析 →", url: "projects/basketball-compete.html" },
+          { text: "原文档（篮球手游目标竞品分析） →", url: "https://docs.qq.com/sheet/DZXNRVmpDdVBsRVVm", external: true }
+        ]
+      },
+      /* 维度二 */
+      {
+        dimClass: "dim-2", dimLabel: "维度二：设计闭环与玩家洞察",
+        heading: "从数据发现到策略建议的完整链路",
+        cards: [
+          { icon: "🌍", title: '"双线结构 vs 哑铃结构"',
+            text: '通过对 6 个国家/地区的篮球手游市场深度分析，首次发现：国内市场呈"双线结构"（NBA竞技 + 街球），海外市场呈"哑铃结构"（两端强、中间弱），精准识别海外街球品类空白机会。'
+          },
+          { icon: "📊", title: "竞品全链路拆解",
+            text: '对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构、商业化闭环、关键平衡点的完整拆解，输出可落地的差异化策略。'
+          }
+        ],
+        links: [
+          { text: "查看：海外篮球手游赛道深度调研 →", url: "projects/basketball-overseas.html" },
+          { text: "查看：国内外篮球手游对比分析 →", url: "projects/basketball-domestic.html" }
+        ]
+      },
+      /* 维度三 */
+      {
+        dimClass: "dim-3", dimLabel: "维度三：技术前瞻与文化赋能",
+        heading: "跨品类视野 + 六维深度拆解",
+        cards: [
+          { icon: "❄️", title: "《无尽冬日》拆解",
+            text: "六维全链路 SLG 分析（市场→美术→玩法→养成→社交→商业化），29+ 页完整报告。",
+            details: [
+              { title: "核心发现", points: [
+                { highlight: "环境压迫性设计：", text: "通过联盟竞争和战力排名创造付费环境压力，个人排名奖励刺激持续付费。" },
+                { highlight: "卡点控制策略：", text: "关键成长节点设置自然卡点，如后期主城升级需耗费数天，付费即可立即完成。" },
+                { highlight: "立体化付费矩阵：", text: "基础功能型（建筑队列）→ 成长加速型（钻石加速）→ 稀缺资源型（英雄碎片）→ 外观特权型（城池皮肤），四层覆盖全付费能力玩家。" },
+                { highlight: "市场表现：", text: "微信小游戏上线29天登顶畅销榜，海外版全球累计下载5250万次，总收入9.35亿美元。2025年8月国内iOS月流水仍超3亿元。" }
+              ]}
+            ]
+          },
+          { icon: "⚔️", title: "《三国群英传：策定九州》拆解",
+            text: "37+ 页完整产品评测与拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环全维度分析。",
+            details: [
+              { title: "核心发现", points: [
+                { highlight: "创新铸兵坊系统：", text: "传说武将专属兵器+强化洗练机制，突破传统养成制约，为战斗系统引入RPG养成逻辑。" },
+                { highlight: "用户分层问题：", text: "大R玩家统治力缺失——装扮系统视觉效果不足、军械种类稀少，导致大R无法在联盟作战中起决定性作用，违背付费初衷。" },
+                { highlight: "循环断裂风险：", text: "军械系统单薄导致大R投入无法转化为战场统治力，验证链条断裂后付费可能减少。" },
+                { highlight: "商业化建议：", text: "缺乏清晰礼包等级划分，建议初期推出分层充值礼包，重点优化外观而非数值，设置VIP便捷特权。" }
+              ]}
+            ]
+          },
+          { icon: "⚔️", title: "《王者荣耀》分析",
+            text: '经济系统平衡机制、皮肤"文化叙事+限定稀缺+社交展示"三维价值模型、社交-战斗融合设计深度分析。'
+          },
+          { icon: "🏯", title: "《主宰世界》拆解",
+            text: "多维度产品拆解报告，覆盖核心玩法循环、经济系统、付费转化链路分析，为同类产品立项提供参考。"
+          }
+        ],
+        links: [
+          { text: "查看：无尽冬日拆解 →", url: "projects/endless-winter.html" },
+          { text: "无尽冬日原文档（PDF） →", url: "https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF", external: true },
+          { text: "三国群英传原文档（PDF） →", url: "https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq", external: true },
+          { text: "查看：王者荣耀分析 →", url: "projects/honor-of-kings.html" },
+          { text: "查看：主宰世界拆解 →", url: "projects/zhuzai-world.html" }
+        ]
+      },
+      /* 维度四 */
+      {
+        dimClass: "dim-4", dimLabel: "维度四：实战运营",
+        heading: "从策略到执行的全流程运营能力",
+        cards: [
+          { icon: "📅", title: "精细化活动运营",
+            text: "对某滚服 RPG 完成 17 个活动的逐日拆解，归纳三段式上线节奏：预热期（第1天）→ 核心期（第2-5天）→ 收尾期（第6-7天），输出商业化排期优化建议。"
+          },
+          { icon: "📢", title: "运营公告模板体系",
+            text: "建立 5 类场景（故障应急/公测上线/版本更新/服务器回档/反外挂声明）的完整公告模板，每类 2-3 个版本，提炼"三层情感结构"与"分层补偿设计"方法论。",
+            details: [
+              { title: "三层情感结构方法论", points: [
+                { tag: "① 共情层", text: '以"各位主公"称呼建立IP沉浸感，第一时间承认问题、表达歉意' },
+                { tag: "② 解释层", text: "用玩家可理解的语言说明问题原因与处理方案，避免技术术语" },
+                { tag: "③ 补偿层", text: "分层补偿设计：基础补偿（全服）+ 等待补偿（按时长）+ 特别致歉（受影响用户）" },
+                { highlight: "IP一致性表达：", text: "以《三国群英传》为例，公告统一使用"主公""军资补给""惶恐敬上"等三国语境表达，增强沉浸感。" }
+              ]}
+            ]
+          },
+          { icon: "📋", title: "公告模板实例：炸服应急（3版本）",
+            text: "",
+            rawLines: [
+              { bold: "模板一·紧急通知：", text: '"目前部分主公遭遇登录困难，我们已火速定位问题，正在全力抢修！补偿方案确定后将第一时间公告。"' },
+              { bold: "模板二·修复公告：", text: '"因今日公测人气爆燃，瞬间涌入的兵马远超预期（服务器请求过载）...维护期间向所有注册主公发放元宝×1000补偿。"' },
+              { bold: "模板三·补偿邮件：", text: '"主公，您的军资补给已送达！【三军粮饷】元宝×800【休整补偿】体力丹×3【特别致歉】聚义令×5"' }
+            ]
+          },
+          { icon: "📋", title: "公告模板实例：反外挂声明（2版本）",
+            text: "",
+            rawLines: [
+              { bold: "版本一·声明：", text: '"我们对任何使用第三方非法软件（外挂）的行为，将采取\'零容忍\'态度。首犯即重典：永久封禁涉事账号！"' },
+              { bold: "版本二·封禁公示：", text: '"经严密监控与反复核实，近期对一批确认使用外挂的违规账号施以最严厉惩处：本次共计永久封禁违规账号【XXXX】个！"' }
+            ],
+            note: { text: "法律背书：引用《刑法》第285条、《网络安全法》第27条，增强威慑力。", color: "var(--gold)" }
+          }
+        ],
+        links: [
+          { text: "查看：精细化活动运营 →", url: "projects/rpg-operations.html" },
+          { text: "查看：运营公告体系 →", url: "projects/announcements.html" },
+          { text: "查看：SLG竞品活动收集 →", url: "projects/slg-activities.html" },
+          { text: "原文档：炸服公告 →", url: "https://docs.qq.com/doc/DZXJKWXpURkRucGZr", external: true },
+          { text: "原文档：反外挂声明 →", url: "https://docs.qq.com/doc/DZW11UU9OT2FrWEJQ", external: true },
+          { text: "原文档：服务器回档 →", url: "https://docs.qq.com/doc/DZXp6UFRsWU9kR2xm", external: true }
+        ]
+      },
+      /* 维度五 */
+      {
+        dimClass: "dim-5", dimLabel: "维度五：商业化运营与增长策略",
+        heading: "《三角洲行动》手游陪玩业务 — 从0到1全链路搭建",
+        subheading: "主导电竞陪玩业务完整搭建，独立产出业务方案、产品定价、招募SOP、挖角计划、风控体系5份核心运营文档",
+        cards: [
+          {
+            icon: "🎯", title: "业务方案核心KPI体系",
+            text: "执行周期：2026.4.18 - 5.16（4周），分补贴驱动期（Week 1-2）与补贴过渡期（Week 3-4）两阶段",
+            kpis: [
+              { num: "300", label: "日均有效订单（目标）" },
+              { num: "50%", label: "整体复购率" },
+              { num: "15%", label: "手游订单占比" },
+              { num: "≤5%", label: "客诉率" }
+            ],
+            note: { text: "补贴退出硬性条件（三项全满足）：品控评分≥4.5 · 下单失败率≤10% · 自然复购率≥15%", color: "var(--gold)" }
+          },
+          {
+            icon: "📊", title: "量化考核体系（100分制）",
+            text: '坚持"服务权重60%，技术权重40%"与"技术可容错，服务零容忍"核心原则',
+            table: {
+              headers: ["评分维度", "分值", "不合格红线"],
+              rows: [
+                ["沟通主动性", "10分", "零沟通直接不合格"],
+                ["服务态度礼貌度", "10分", "态度恶劣直接不合格"],
+                ["护航服务细节", "15分", "自顾发育扣满"],
+                ["情绪稳定抗压", "10分", "摆烂消极扣满"],
+                ["诚信纪律性", "10分", "养猪刷数据不合格"],
+                ["互动氛围控场", "5分", "—"],
+                ["击杀数据达标", "15分", "每少1杀扣1分"],
+                ["物资撤离达标", "10分", "—"],
+                ["游戏意识节奏", "10分", "—"],
+                ["对局整体质量", "5分", "—"]
+              ]
+            },
+            note: { text: "星级评定：70-79分=2星 · 80-84分=3星 · 85-89分=4星 · 90+=5星", color: "var(--accent)" }
+          },
+          {
+            icon: "💰", title: "星级差异化定价体系",
+            text: "按时长计费 + 难度分级，高星级与高难度带来显著溢价",
+            table: {
+              headers: ["星级", "时薪", "补贴/单", "分成"],
+              rows: [
+                ["1星（新人）", "80元/h", "15元", "80%"],
+                ["2星（合格）", "80元/h", "—", "82%"],
+                ["3星（成熟）", "110元/h", "3元", "85%"],
+                ["4星（优质）", "130元/h", "5元", "87%"],
+                ["5星（招牌）", "160元/h", "10元", "90%"]
+              ]
+            },
+            note: { text: '体验单引流价：1-2星118元 / 5星158元；趣味单按★~★★★★四难度分级，最高"大红对碰"5星执行价7715元。', color: "var(--text2)" }
+          },
+          {
+            icon: "🔄", title: "优惠券阶梯转化设计",
+            text: "引导用户留存并提升LTV，每笔完单后系统自动推送下一阶梯优惠券",
+            table: {
+              headers: ["阶梯", "套餐", "额外权益", "目的"],
+              rows: [
+                ["第一单", "88元保底", "赠送10元券", "引流钩子"],
+                ["第二单", "108元", "2张10元券", "引导趣味单"],
+                ["第三单", "118元", "—", "培养习惯"],
+                ["第四单", "128元", "2张10元券", "提升粘性"],
+                ["第五单+", "158元", "—", "LTV最大化"]
+              ]
+            },
+            note: { text: "关键转化目标：第一单→第二单≥20%，第二单→第三单≥20%", color: "var(--green)" }
+          },
+          {
+            icon: "🛡️", title: "三级风险应急预案",
+            text: "",
+            points: [
+              { highlight: "一级·补贴退出延期：", text: "Week 2末退出指标未达标则顺延一周，加强品控与客服培训" },
+              { highlight: "二级·供应链补充：", text: "大神招募不达预期时启动备用渠道（合作公会推荐），临时提高校园合伙人奖励" },
+              { highlight: "三级·品控提升：", text: "评分下滑时将平台抽检比例从10%提升至20%，建立大神分层培训体系" }
+            ],
+            details: [
+              { title: "防套利机制", points: [
+                { text: "押金扣除制度（每单扣留10%，连续活跃30天后解除）+ 奖励分期发放（与真实留存挂钩）+ 异常订单识别（IP/设备关联、充值下单时间差<1分钟、同一打手承接同一老板>80%自动预警）" }
+              ]}
+            ]
+          },
+          {
+            icon: "📝", title: "全流程标准化SOP（6步闭环）",
+            text: "",
+            tags: ["Step1 破冰转化", "Step2 进群考核", "Step3 量化定级", "Step4 权益宣讲", "Step5 在岗抽检", "Step6 月度复盘"],
+            extraText: "覆盖建联转化、考核定级、上岗激励、在岗留存、升降级管控全闭环。统一话术、统一流程、统一标准、统一奖惩。",
+            note: { text: "核心逻辑：服务权重60%、技术权重40%，技术可容错、服务零容忍", color: "var(--accent)" }
+          },
+          {
+            icon: "🏆", title: "大神挖角专项计划",
+            text: "面向勺勺电竞、pp电竞、海米电竞三大竞品平台，以高分成+多维补贴+低门槛入驻为核心抓手",
+            points: [
+              { highlight: "核心优势：", text: "首月5%抽成（竞品15-28%）· 秒到账提现（竞品2-7天）· 每单最少补贴5元 · 全员流水补贴" },
+              { highlight: "预期效果：", text: "3个月累计在岗大神30-48人，月总GMV预测48-77万" },
+              { highlight: "五星大神月入测算：", text: "订单收入13509元 + 补贴450元 + 梯度奖750元 + 全勤奖200元 + 搬家费165元 ≈ 15,074元/月", boldValue: true }
+            ]
+          }
+        ],
+        links: [
+          { text: "原文档：业务方案 →", url: "https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u", external: true },
+          { text: "原文档：全套产品需求 →", url: "https://docs.qq.com/doc/DZXJDdVZvUWFtU3hG", external: true },
+          { text: "原文档：大神挖角计划 →", url: "https://docs.qq.com/doc/DZVV4blBjWHhXTEdt", external: true },
+          { text: "原文档：全流程SOP →", url: "https://docs.qq.com/doc/DZVB6RENHVm5wSWNO", external: true }
+        ]
+      }
+    ]
+  },
+
+  /* ── STAR 项目精选 ── */
+  stars: {
+    title: "STAR 项目精选",
+    subtitle: "以资深面试官视角呈现的 9 个核心项目，每个项目均用 STAR 法则详细说明个人核心作用",
+    categories: ["全部", "竞品调研", "产品拆解", "活动运营", "商业化运营"],
+    items: [
+      {
+        category: "竞品调研",
+        title: "海外篮球手游赛道深度调研",
+        S: "公司产品团队需要评估篮球手游出海可行性，但缺乏海外市场的系统数据支撑。",
+        T: "独立完成海外篮球手游赛道的全维度调研，覆盖 6 个国家、6 款核心竞品。",
+        A: "建立多维度数据采集框架，通过对下载量、收入、RPD、评分等指标的交叉分析，率先识别出"哑铃结构"。",
+        R: '产出 20+ 页深度调研报告，核心发现"哑铃结构"影响产品立项方向讨论，为出海策略提供关键数据支撑。',
+        link: { text: "查看详情 →", url: "projects/basketball-overseas.html" }
+      },
+      {
+        category: "产品拆解",
+        title: "《无尽冬日》全链路产品拆解",
+        S: "团队需要对 SLG 品类建立系统化的分析框架，为公司 SLG 新品立项提供参考。",
+        T: "独立完成一头部 SLG 产品的六维全链路拆解，将其设计逻辑提炼为可复用的方法论。",
+        A: '建立"市场→美术→玩法→养成→社交→商业化"六维分析框架，重点揭示"环境压迫性设计"与"卡点控制策略"。',
+        R: "29+ 页完整拆解报告，成为团队 SLG 品类研究的基准参考文档，分析框架被后续多份调研复用。",
+        links: [
+          { text: "查看详情 →", url: "projects/endless-winter.html" },
+          { text: "原文档 →", url: "https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF", external: true }
+        ]
+      },
+      {
+        category: "竞品调研",
+        title: "SLG 竞品活动对标分析",
+        S: "项目组需要系统了解 SLG 品类头部产品的活动运营策略，为自有产品活动体系搭建提供依据。",
+        T: "完成 7 款头部 SLG 产品的竞品活动全量收集与分类对标。",
+        A: '收集 70+ 活动案例，按活动类型、上线节奏、付费设计三维度分类，对比"IP联动"与"内生内容"两种模式。',
+        R: "建立可检索的活动数据库，输出活动策略对比分析报告，为项目组活动设计提供直接参考。",
+        link: { text: "查看详情 →", url: "projects/slg-activities.html" }
+      },
+      {
+        category: "活动运营",
+        title: "RPG 精细化活动运营分析",
+        S: "运营团队需要优化某滚服 RPG 的活动排期与商业化节奏，但缺乏系统化的活动节奏分析方法。",
+        T: "对 17 个活动完成逐日拆解，输出活动节奏分析与商业化策略建议。",
+        A: "归纳三段式上线节奏（预热→核心→收尾），分析各阶段商业化节点与玩家心理匹配度，并完成与7款SLG竞品的活动模式对标。",
+        R: '提出的"四段式"活动节奏被运营团队采纳为后续活动排期参考模板，目前该表以 57% 完读率被持续高频查阅。',
+        link: { text: "查看详情 →", url: "projects/rpg-operations.html" }
+      },
+      {
+        category: "活动运营",
+        title: "运营公告模板体系建设",
+        S: "项目在不同运营场景下公告风格不一致，玩家情绪管理效果参差不齐，缺乏可复用的标准化模板。",
+        T: "建立 5 类核心场景的运营公告标准化模板体系。",
+        A: "针对故障应急（3版本）、公测上线（3版本）、版本更新、服务器回档（3版本）、反外挂声明（2版本）各场景，提炼"三层情感结构"（共情→解释→补偿）与"IP一致性表达"原则。",
+        R: "10+ 版本模板被运营团队直接复用，公告撰写效率提升显著，玩家情绪管理效果明显改善。",
+        link: { text: "查看详情 →", url: "projects/announcements.html" }
+      },
+      {
+        category: "竞品调研",
+        title: "篮球手游竞品深度拆解",
+        S: "公司新品立项阶段，需要判断篮球手游市场的竞争格局与差异化空间。",
+        T: "对核心竞品完成全维度拆解，输出差异化策略建议。",
+        A: "对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构→商业化闭环→关键平衡点的完整拆解，提出数值公平性平衡判断。",
+        R: '拆解结论影响产品定位讨论，提出的"公平竞技+轻度养成"方向获得团队认可。',
+        link: { text: "查看详情 →", url: "projects/basketball-compete.html" }
+      },
+      {
+        category: "商业化运营",
+        title: "《三角洲行动》陪玩业务方案搭建",
+        borderColor: "var(--cyan)",
+        S: "公司需要从零搭建《三角洲行动》手游陪玩业务，缺乏完整的运营框架和执行方案。",
+        T: "独立完成业务方案设计，覆盖供给端、需求侧、品控、定价、风控全链路。",
+        A: '建立"日均300单/复购50%/客诉≤5%"KPI体系，设计100分制量化考核（服务60%+技术40%）、星级差异化定价（1-5星时薪80-160元）、优惠券5阶梯转化模型、三级风险应急预案及防套利机制。',
+        R: "产出完整业务方案文档，设定补贴退出三重硬性指标（品控≥4.5/下单失败≤10%/自然复购≥15%），为业务可持续增长提供验证框架。",
+        link: { text: "查看原文档 →", url: "https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u", external: true }
+      },
+      {
+        category: "商业化运营",
+        title: "大神挖角专项计划与风控体系",
+        borderColor: "var(--cyan)",
+        S: "电竞陪玩行业头部平台高抽成锁住优质打手资源，需要快速获取竞品核心人才。",
+        T: "设计面向3大竞品平台的挖角方案，包含激励体系、风控机制与效果追踪。",
+        A: "设计"首月95%分成+5元/单补贴"入驻激励、日/周/月三级奖励体系（日单王25元/周榜250元/月梯度最高4000元）+搬家费三阶梯（15+50+100元），同步建立押金扣除+奖励分期+异常订单识别三级防套利机制。",
+        R: "预期3个月累计在岗大神30-48人，月总GMV预测48-77万；五星大神月入测算约15,074元，竞争力显著优于竞品。",
+        link: { text: "查看原文档 →", url: "https://docs.qq.com/doc/DZVV4blBjWHhXTEdt", external: true }
+      },
+      {
+        category: "产品拆解",
+        title: "《三国群英传：策定九州》产品拆解",
+        S: "项目组需要深入理解自有产品的设计逻辑与商业化问题，为后续优化提供方向。",
+        T: "对游戏完成37+页全维度拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环。",
+        A: '识别"大R统治力缺失"核心问题（军械系统单薄导致付费无法转化为战场统治力），分析循环断裂风险；提出分层充值礼包、VIP便捷特权等商业化优化建议。',
+        R: "报告成为产品优化讨论的核心参考文档，商业化建议被纳入后续版本规划讨论。",
+        link: { text: "查看原文档 →", url: "https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq", external: true }
+      }
+    ]
+  },
+
+  /* ── 联系方式 ── */
+  contact: {
+    title: "联系我",
+    subtitle: "期待与你的交流",
+    items: [
+      { icon: "📧", label: "邮箱", value: "2876537460@qq.com" },
+      { icon: "💬", label: "微信", value: "15181981772" }
+    ]
+  },
+
+  /* ── 页脚 ── */
+  footer: {
+    copyright: "© 2026 卢梦潇 · 中山大学 · 游戏运营",
+    note: "Built with passion for games. Last updated: June 2026"
+  }
+};
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║                                                              ║
+   ║           ⚙️ 渲染逻辑 — 一般不需要修改以下内容                ║
+   ║                                                              ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+// 工具：转义 **bold** 标记
+function fmt(text) {
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#fff;">$1</strong>');
+}
+
+// 渲染 Hero
+function renderHero() {
+  const p = SITE_DATA.profile;
+  return `
+  <section id="hero">
+    <div class="hero-avatar reveal">${p.avatar}</div>
+    <h1 class="hero-name reveal">${p.name}</h1>
+    <p class="hero-title reveal">${p.title}</p>
+    <div class="hero-tags reveal">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+    <div class="hero-stats reveal">
+      ${p.stats.map(s=>`<div class="hero-stat"><div class="num">${s.num}</div><div class="label">${s.label}</div></div>`).join('')}
+    </div>
+    <a href="#projects" class="btn-primary">${p.projectsBtnText}</a>
+    <a href="${p.resumeUrl}" class="btn-outline" download>${p.resumeBtnText}</a>
+  </section>`;
+}
+
+// 渲染关于我
+function renderAbout() {
+  const a = SITE_DATA.about;
+  return `
+  <section id="about">
+    <h2 class="section-title reveal">${a.title}</h2>
+    <p class="section-subtitle reveal">${a.subtitle}</p>
     <div class="grid2">
-      <div class="card">
-        <h3>📐 四维产品评估体系</h3>
-        <p>建立"核心玩法 → 养成循环 → 商业化设计 → 市场表现"标准化框架，对 9 款国内篮球手游完成全维度数据采集与分析，形成可复用的品类模板。</p>
-      </div>
-      <div class="card">
-        <h3>🏀 品类资产矩阵</h3>
-        <p>将篮球手游拆分为 NBA 竞技、街头篮球、经营模拟、动漫 IP 四个子赛道，分别梳理商业化逻辑与用户画像差异，为产品定位提供策略依据。</p>
-      </div>
-    </div>
-    <div style="margin-top:20px;">
-      <a href="projects/basketball-products.html" class="project-link">查看：篮球手游产品调研 →</a>
-      <a href="projects/basketball-compete.html" class="project-link" style="margin-left:8px;">查看：篮球手游目标竞品分析 →</a>
-      <a href="https://docs.qq.com/sheet/DZXNRVmpDdVBsRVVm" class="project-link" style="margin-left:8px;" target="_blank">原文档（篮球手游目标竞品分析） →</a>
-    </div>
-  </div>
-
-  <!-- Dimension 2 -->
-  <div style="margin-bottom:64px;">
-    <span class="dim-badge dim-2">维度二：设计闭环与玩家洞察</span>
-    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">从数据发现到策略建议的完整链路</h3>
-    <div class="grid2">
-      <div class="card">
-        <h3>🌍 "双线结构 vs 哑铃结构"</h3>
-        <p>通过对 6 个国家/地区的篮球手游市场深度分析，首次发现：国内市场呈"双线结构"（NBA竞技 + 街球），海外市场呈"哑铃结构"（两端强、中间弱），精准识别海外街球品类空白机会。</p>
-      </div>
-      <div class="card">
-        <h3>📊 竞品全链路拆解</h3>
-        <p>对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构、商业化闭环、关键平衡点的完整拆解，输出可落地的差异化策略。</p>
-      </div>
-    </div>
-    <div style="margin-top:20px;">
-      <a href="projects/basketball-overseas.html" class="project-link">查看：海外篮球手游赛道深度调研 →</a>
-      <a href="projects/basketball-domestic.html" class="project-link" style="margin-left:8px;">查看：国内外篮球手游对比分析 →</a>
-    </div>
-  </div>
-
-  <!-- Dimension 3 -->
-  <div style="margin-bottom:64px;">
-    <span class="dim-badge dim-3">维度三：技术前瞻与文化赋能</span>
-    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">跨品类视野 + 六维深度拆解</h3>
-    <div class="grid2">
-      <div class="card">
-        <h3>❄️ 《无尽冬日》拆解</h3>
-        <p>六维全链路 SLG 分析（市场→美术→玩法→养成→社交→商业化），29+ 页完整报告。</p>
-        <div class="detail-block">
-          <h4>核心发现</h4>
-          <p><span class="highlight">环境压迫性设计：</span>通过联盟竞争和战力排名创造付费环境压力，个人排名奖励刺激持续付费。</p>
-          <p><span class="highlight">卡点控制策略：</span>关键成长节点设置自然卡点，如后期主城升级需耗费数天，付费即可立即完成。</p>
-          <p><span class="highlight">立体化付费矩阵：</span>基础功能型（建筑队列）→ 成长加速型（钻石加速）→ 稀缺资源型（英雄碎片）→ 外观特权型（城池皮肤），四层覆盖全付费能力玩家。</p>
-          <p><span class="highlight">市场表现：</span>微信小游戏上线29天登顶畅销榜，海外版全球累计下载5250万次，总收入9.35亿美元。2025年8月国内iOS月流水仍超3亿元。</p>
+      ${a.cards.map(c=>`
+        <div class="card reveal">
+          <h3>${c.icon} ${c.title}</h3>
+          ${c.content.map(item=>{
+            if(item.type==="highlight") return `<p style="color:#fff;font-weight:600;">${item.text}</p>`;
+            if(item.type==="text") return `<p style="margin-top:8px;">${item.text}</p>`;
+            if(item.type==="list") return `<ul>${item.items.map(i=>`<li>${fmt(i)}</li>`).join('')}</ul>`;
+            return '';
+          }).join('')}
         </div>
-      </div>
-      <div class="card">
-        <h3>⚔️ 《三国群英传：策定九州》拆解</h3>
-        <p>37+ 页完整产品评测与拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环全维度分析。</p>
-        <div class="detail-block">
-          <h4>核心发现</h4>
-          <p><span class="highlight">创新铸兵坊系统：</span>传说武将专属兵器+强化洗练机制，突破传统养成制约，为战斗系统引入RPG养成逻辑。</p>
-          <p><span class="highlight">用户分层问题：</span>大R玩家统治力缺失——装扮系统视觉效果不足、军械种类稀少，导致大R无法在联盟作战中起决定性作用，违背付费初衷。</p>
-          <p><span class="highlight">循环断裂风险：</span>军械系统单薄导致大R投入无法转化为战场统治力，验证链条断裂后付费可能减少。</p>
-          <p><span class="highlight">商业化建议：</span>缺乏清晰礼包等级划分，建议初期推出分层充值礼包，重点优化外观而非数值，设置VIP便捷特权。</p>
+      `).join('')}
+    </div>
+  </section>`;
+}
+
+// 渲染核心能力
+function renderSkills() {
+  const s = SITE_DATA.skills;
+  return `
+  <section id="skills">
+    <h2 class="section-title reveal">${s.title}</h2>
+    <p class="section-subtitle reveal">${s.subtitle}</p>
+    <div class="grid3">
+      ${s.groups.map(g=>`
+        <div class="card reveal">
+          <h3>${g.icon} ${g.title}</h3>
+          ${g.bars.map(b=>`
+            <div class="skill-bar">
+              <div class="name">${b.name}</div>
+              <div class="bar"><div class="fill" data-width="${b.level}%" style="background:${b.color};"></div></div>
+            </div>
+          `).join('')}
         </div>
-      </div>
+      `).join('')}
     </div>
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3>⚔️ 《王者荣耀》分析</h3>
-        <p>经济系统平衡机制、皮肤"文化叙事+限定稀缺+社交展示"三维价值模型、社交-战斗融合设计深度分析。</p>
-      </div>
-      <div class="card">
-        <h3>🏯 《主宰世界》拆解</h3>
-        <p>多维度产品拆解报告，覆盖核心玩法循环、经济系统、付费转化链路分析，为同类产品立项提供参考。</p>
-      </div>
-    </div>
-    <div style="margin-top:20px;">
-      <a href="projects/endless-winter.html" class="project-link">查看：无尽冬日拆解 →</a>
-      <a href="https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF" class="project-link" style="margin-left:8px;" target="_blank">无尽冬日原文档（PDF） →</a>
-      <a href="https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq" class="project-link" style="margin-left:8px;" target="_blank">三国群英传原文档（PDF） →</a>
-      <a href="projects/honor-of-kings.html" class="project-link" style="margin-left:8px;">查看：王者荣耀分析 →</a>
-      <a href="projects/zhuzai-world.html" class="project-link" style="margin-left:8px;">查看：主宰世界拆解 →</a>
-    </div>
-  </div>
+  </section>`;
+}
 
-  <!-- Dimension 4 -->
-  <div style="margin-bottom:64px;">
-    <span class="dim-badge dim-4">维度四：实战运营</span>
-    <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">从策略到执行的全流程运营能力</h3>
-    <div class="grid2">
-      <div class="card">
-        <h3>📅 精细化活动运营</h3>
-        <p>对某滚服 RPG 完成 17 个活动的逐日拆解，归纳三段式上线节奏：预热期（第1天）→ 核心期（第2-5天）→ 收尾期（第6-7天），输出商业化排期优化建议。</p>
-      </div>
-      <div class="card">
-        <h3>📢 运营公告模板体系</h3>
-        <p>建立 5 类场景（故障应急/公测上线/版本更新/服务器回档/反外挂声明）的完整公告模板，每类 2-3 个版本，提炼"三层情感结构"与"分层补偿设计"方法论。</p>
-        <div class="detail-block">
-          <h4>三层情感结构方法论</h4>
-          <p><span class="method-tag">① 共情层</span> 以"各位主公"称呼建立IP沉浸感，第一时间承认问题、表达歉意</p>
-          <p><span class="method-tag">② 解释层</span> 用玩家可理解的语言说明问题原因与处理方案，避免技术术语</p>
-          <p><span class="method-tag">③ 补偿层</span> 分层补偿设计：基础补偿（全服）+ 等待补偿（按时长）+ 特别致歉（受影响用户）</p>
-          <p style="margin-top:8px;color:var(--accent);">IP一致性表达：以《三国群英传》为例，公告统一使用"主公""军资补给""惶恐敬上"等三国语境表达，增强沉浸感。</p>
+// 渲染经历
+function renderExperience() {
+  const e = SITE_DATA.experience;
+  return `
+  <section id="experience">
+    <h2 class="section-title reveal">${e.title}</h2>
+    <p class="section-subtitle reveal">${e.subtitle}</p>
+    <div class="timeline">
+      ${e.items.map(item=>`
+        <div class="timeline-item reveal">
+          <div class="timeline-date">${item.date}</div>
+          <div class="timeline-title">${item.title}</div>
+          <div class="timeline-desc">
+            ${Array.isArray(item.desc)
+              ? item.desc.map(d=>`<strong>${d.label}</strong>${d.text}<br>`).join('')
+              : item.desc
+            }
+          </div>
         </div>
-      </div>
+      `).join('')}
     </div>
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3>📋 公告模板实例：炸服应急（3版本）</h3>
-        <p><strong style="color:#fff;">模板一·紧急通知：</strong>"目前部分主公遭遇登录困难，我们已火速定位问题，正在全力抢修！补偿方案确定后将第一时间公告。"</p>
-        <p><strong style="color:#fff;">模板二·修复公告：</strong>"因今日公测人气爆燃，瞬间涌入的兵马远超预期（服务器请求过载）...维护期间向所有注册主公发放元宝×1000补偿。"</p>
-        <p><strong style="color:#fff;">模板三·补偿邮件：</strong>"主公，您的军资补给已送达！【三军粮饷】元宝×800【休整补偿】体力丹×3【特别致歉】聚义令×5"</p>
-      </div>
-      <div class="card">
-        <h3>📋 公告模板实例：反外挂声明（2版本）</h3>
-        <p><strong style="color:#fff;">版本一·声明：</strong>"我们对任何使用第三方非法软件（外挂）的行为，将采取'零容忍'态度。首犯即重典：永久封禁涉事账号！"</p>
-        <p><strong style="color:#fff;">版本二·封禁公示：</strong>"经严密监控与反复核实，近期对一批确认使用外挂的违规账号施以最严厉惩处：本次共计永久封禁违规账号【XXXX】个！"</p>
-        <p style="margin-top:8px;color:var(--gold);">法律背书：引用《刑法》第285条、《网络安全法》第27条，增强威慑力。</p>
-      </div>
-    </div>
-    <div style="margin-top:20px;">
-      <a href="projects/rpg-operations.html" class="project-link">查看：精细化活动运营 →</a>
-      <a href="projects/announcements.html" class="project-link" style="margin-left:8px;">查看：运营公告体系 →</a>
-      <a href="projects/slg-activities.html" class="project-link" style="margin-left:8px;">查看：SLG竞品活动收集 →</a>
-      <a href="https://docs.qq.com/doc/DZXJKWXpURkRucGZr" class="project-link" style="margin-left:8px;" target="_blank">原文档：炸服公告 →</a>
-      <a href="https://docs.qq.com/doc/DZW11UU9OT2FrWEJQ" class="project-link" style="margin-left:8px;" target="_blank">原文档：反外挂声明 →</a>
-      <a href="https://docs.qq.com/doc/DZXp6UFRsWU9kR2xm" class="project-link" style="margin-left:8px;" target="_blank">原文档：服务器回档 →</a>
-    </div>
-  </div>
+  </section>`;
+}
 
-  <!-- Dimension 5 (NEW) -->
-  <div style="margin-bottom:48px;">
-    <span class="dim-badge dim-5">维度五：商业化运营与增长策略</span>
-    <h3 style="font-size:22px;color:#fff;margin-bottom:8px;">《三角洲行动》手游陪玩业务 — 从0到1全链路搭建</h3>
-    <p style="color:var(--text2);font-size:14px;margin-bottom:24px;">主导电竞陪玩业务完整搭建，独立产出业务方案、产品定价、招募SOP、挖角计划、风控体系5份核心运营文档</p>
+// 渲染单个卡片
+function renderCard(card) {
+  let html = `<div class="card reveal"${card.borderColor?` style="border-color:${card.borderColor};"`:''}>`;
+  html += `<h3>${card.icon||''} ${card.title}</h3>`;
+  if(card.text) html += `<p>${card.text}</p>`;
+  // KPI
+  if(card.kpis) {
+    html += `<div class="kpi-row">${card.kpis.map(k=>`<div class="kpi-item"><div class="kpi-num">${k.num}</div><div class="kpi-label">${k.label}</div></div>`).join('')}</div>`;
+  }
+  // 表格
+  if(card.table) {
+    html += `<table><tr>${card.table.headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+    html += card.table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+    html += `</table>`;
+  }
+  // 要点列表
+  if(card.points) {
+    card.points.forEach(p=>{
+      html += `<p>`;
+      if(p.highlight) html += `<span class="highlight">${p.highlight}</span>`;
+      if(p.boldValue) html += `<strong style="color:var(--gold);">${p.text}</strong>`;
+      else html += p.text;
+      html += `</p>`;
+    });
+  }
+  // 标签
+  if(card.tags) {
+    html += `<p>${card.tags.map(t=>`<span class="method-tag">${t}</span>`).join('')}</p>`;
+  }
+  if(card.extraText) html += `<p style="margin-top:8px;">${card.extraText}</p>`;
+  // 详情块
+  if(card.details) {
+    card.details.forEach(d=>{
+      html += `<div class="detail-block"><h4>${d.title}</h4>`;
+      d.points.forEach(p=>{
+        html += `<p>`;
+        if(p.tag) html += `<span class="method-tag">${p.tag}</span> ${p.text}`;
+        else if(p.highlight) html += `<span class="highlight">${p.highlight}</span>${p.text}`;
+        else html += p.text;
+        html += `</p>`;
+      });
+      html += `</div>`;
+    });
+  }
+  // 原始行
+  if(card.rawLines) {
+    card.rawLines.forEach(l=>{
+      html += `<p><strong style="color:#fff;">${l.bold}</strong>${l.text}</p>`;
+    });
+  }
+  // 备注
+  if(card.note) {
+    html += `<p style="margin-top:8px;color:${card.note.color||'var(--accent)'};">${card.note.text}</p>`;
+  }
+  html += `</div>`;
+  return html;
+}
 
-    <!-- KPI Summary -->
-    <div class="card" style="margin-bottom:24px;">
-      <h3>🎯 业务方案核心KPI体系</h3>
-      <p style="margin-bottom:12px;">执行周期：2026.4.18 - 5.16（4周），分补贴驱动期（Week 1-2）与补贴过渡期（Week 3-4）两阶段</p>
-      <div class="kpi-row">
-        <div class="kpi-item"><div class="kpi-num">300</div><div class="kpi-label">日均有效订单（目标）</div></div>
-        <div class="kpi-item"><div class="kpi-num">50%</div><div class="kpi-label">整体复购率</div></div>
-        <div class="kpi-item"><div class="kpi-num">15%</div><div class="kpi-label">手游订单占比</div></div>
-        <div class="kpi-item"><div class="kpi-num">≤5%</div><div class="kpi-label">客诉率</div></div>
-      </div>
-      <p style="margin-top:8px;color:var(--gold);font-size:13px;">补贴退出硬性条件（三项全满足）：品控评分≥4.5 · 下单失败率≤10% · 自然复购率≥15%</p>
-    </div>
+// 渲染项目
+function renderProjects() {
+  const p = SITE_DATA.projects;
+  let html = `<section id="projects">
+    <h2 class="section-title reveal" style="margin-bottom:8px;">${p.title}</h2>
+    <p class="section-subtitle reveal">${p.subtitle}</p>`;
+  p.dimensions.forEach(dim=>{
+    html += `<div style="margin-bottom:64px;" class="reveal">
+      <span class="dim-badge ${dim.dimClass}">${dim.dimLabel}</span>
+      <h3 style="font-size:22px;color:#fff;margin-bottom:8px;">${dim.heading}</h3>`;
+    if(dim.subheading) html += `<p style="color:var(--text2);font-size:14px;margin-bottom:24px;">${dim.subheading}</p>`;
+    else html += `<div style="margin-bottom:24px;"></div>`;
+    // 卡片网格
+    if(dim.cards.length<=2) html += `<div class="grid2">`;
+    else if(dim.cards.length<=3) html += `<div class="grid3">`;
+    else html += `<div class="grid2">`;
+    dim.cards.forEach(c=>html+=renderCard(c));
+    html += `</div>`;
+    // 链接
+    if(dim.links) {
+      html += `<div style="margin-top:20px;">${dim.links.map((l,i)=>
+        `<a href="${l.url}" class="project-link"${i>0?' style="margin-left:8px;"':''}${l.external?' target="_blank"':''}>${l.text}</a>`
+      ).join('')}</div>`;
+    }
+    html += `</div>`;
+  });
+  html += `</section>`;
+  return html;
+}
 
-    <div class="grid2">
-      <div class="card">
-        <h3>📊 量化考核体系（100分制）</h3>
-        <p>坚持"服务权重60%，技术权重40%"与"技术可容错，服务零容忍"核心原则</p>
-        <table>
-          <tr><th>评分维度</th><th>分值</th><th>不合格红线</th></tr>
-          <tr><td>沟通主动性</td><td>10分</td><td>零沟通直接不合格</td></tr>
-          <tr><td>服务态度礼貌度</td><td>10分</td><td>态度恶劣直接不合格</td></tr>
-          <tr><td>护航服务细节</td><td>15分</td><td>自顾发育扣满</td></tr>
-          <tr><td>情绪稳定抗压</td><td>10分</td><td>摆烂消极扣满</td></tr>
-          <tr><td>诚信纪律性</td><td>10分</td><td>养猪刷数据不合格</td></tr>
-          <tr><td>互动氛围控场</td><td>5分</td><td>—</td></tr>
-          <tr><td>击杀数据达标</td><td>15分</td><td>每少1杀扣1分</td></tr>
-          <tr><td>物资撤离达标</td><td>10分</td><td>—</td></tr>
-          <tr><td>游戏意识节奏</td><td>10分</td><td>—</td></tr>
-          <tr><td>对局整体质量</td><td>5分</td><td>—</td></tr>
-        </table>
-        <p style="margin-top:8px;color:var(--accent);">星级评定：70-79分=2星 · 80-84分=3星 · 85-89分=4星 · 90+=5星</p>
-      </div>
-      <div class="card">
-        <h3>💰 星级差异化定价体系</h3>
-        <p>按时长计费 + 难度分级，高星级与高难度带来显著溢价</p>
-        <table>
-          <tr><th>星级</th><th>时薪</th><th>补贴/单</th><th>分成</th></tr>
-          <tr><td>1星（新人）</td><td>80元/h</td><td>15元</td><td>80%</td></tr>
-          <tr><td>2星（合格）</td><td>80元/h</td><td>—</td><td>82%</td></tr>
-          <tr><td>3星（成熟）</td><td>110元/h</td><td>3元</td><td>85%</td></tr>
-          <tr><td>4星（优质）</td><td>130元/h</td><td>5元</td><td>87%</td></tr>
-          <tr><td>5星（招牌）</td><td>160元/h</td><td>10元</td><td>90%</td></tr>
-        </table>
-        <p style="margin-top:8px;">体验单引流价：1-2星118元 / 5星158元；趣味单按★~★★★★四难度分级，最高"大红对碰"5星执行价7715元。</p>
-      </div>
-    </div>
+// 渲染 STAR 项目
+function renderStars() {
+  const s = SITE_DATA.stars;
+  let html = `<h2 class="section-title reveal" style="margin-top:48px;">${s.title}</h2>
+    <p class="section-subtitle reveal">${s.subtitle}</p>`;
+  // 筛选按钮
+  html += `<div class="filter-bar reveal" id="star-filter">
+    ${s.categories.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}
+  </div>`;
+  // 卡片
+  html += `<div class="grid2" id="star-grid">`;
+  s.items.forEach(item=>{
+    html += `<div class="card reveal star-card" data-cat="${item.category}"${item.borderColor?` style="border-color:${item.borderColor};"`:''}>
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">${item.title}</h3>
+      <p><strong>S：</strong>${item.S}</p>
+      <p><strong>T：</strong>${item.T}</p>
+      <p><strong>A：</strong>${item.A}</p>
+      <p><strong>R：</strong>${item.R}</p>`;
+    if(item.link) html += `<a href="${item.link.url}" class="project-link"${item.link.external?' target="_blank"':''}>${item.link.text}</a>`;
+    if(item.links) item.links.forEach((l,i)=>{
+      html += `<a href="${l.url}" class="project-link"${i>0||item.link?' style="margin-left:8px;"':''}${l.external?' target="_blank"':''}>${l.text}</a>`;
+    });
+    html += `</div>`;
+  });
+  html += `</div>`;
+  return html;
+}
 
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3>🔄 优惠券阶梯转化设计</h3>
-        <p>引导用户留存并提升LTV，每笔完单后系统自动推送下一阶梯优惠券</p>
-        <table>
-          <tr><th>阶梯</th><th>套餐</th><th>额外权益</th><th>目的</th></tr>
-          <tr><td>第一单</td><td>88元保底</td><td>赠送10元券</td><td>引流钩子</td></tr>
-          <tr><td>第二单</td><td>108元</td><td>2张10元券</td><td>引导趣味单</td></tr>
-          <tr><td>第三单</td><td>118元</td><td>—</td><td>培养习惯</td></tr>
-          <tr><td>第四单</td><td>128元</td><td>2张10元券</td><td>提升粘性</td></tr>
-          <tr><td>第五单+</td><td>158元</td><td>—</td><td>LTV最大化</td></tr>
-        </table>
-        <p style="margin-top:8px;color:var(--green);">关键转化目标：第一单→第二单≥20%，第二单→第三单≥20%</p>
-      </div>
-      <div class="card">
-        <h3>🛡️ 三级风险应急预案</h3>
-        <p><span class="highlight">一级·补贴退出延期：</span>Week 2末退出指标未达标则顺延一周，加强品控与客服培训</p>
-        <p><span class="highlight">二级·供应链补充：</span>大神招募不达预期时启动备用渠道（合作公会推荐），临时提高校园合伙人奖励</p>
-        <p><span class="highlight">三级·品控提升：</span>评分下滑时将平台抽检比例从10%提升至20%，建立大神分层培训体系</p>
-        <div class="detail-block" style="margin-top:12px;">
-          <h4>防套利机制</h4>
-          <p>押金扣除制度（每单扣留10%，连续活跃30天后解除）+ 奖励分期发放（与真实留存挂钩）+ 异常订单识别（IP/设备关联、充值下单时间差<1分钟、同一打手承接同一老板>80%自动预警）</p>
+// 渲染联系
+function renderContact() {
+  const c = SITE_DATA.contact;
+  return `
+  <section id="contact">
+    <h2 class="section-title reveal">${c.title}</h2>
+    <p class="section-subtitle reveal">${c.subtitle}</p>
+    <div class="grid2" style="max-width:600px;margin:0 auto;">
+      ${c.items.map(i=>`
+        <div class="contact-item reveal">
+          <div class="icon">${i.icon}</div>
+          <div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">${i.label}</div>
+            <div class="val">${i.value}</div>
+          </div>
         </div>
-      </div>
+      `).join('')}
     </div>
+  </section>`;
+}
 
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3>📝 全流程标准化SOP（6步闭环）</h3>
-        <p><span class="method-tag">Step1 破冰转化</span><span class="method-tag">Step2 进群考核</span><span class="method-tag">Step3 量化定级</span><span class="method-tag">Step4 权益宣讲</span><span class="method-tag">Step5 在岗抽检</span><span class="method-tag">Step6 月度复盘</span></p>
-        <p style="margin-top:8px;">覆盖建联转化、考核定级、上岗激励、在岗留存、升降级管控全闭环。统一话术、统一流程、统一标准、统一奖惩。</p>
-        <p style="color:var(--accent);">核心逻辑：服务权重60%、技术权重40%，技术可容错、服务零容忍</p>
-      </div>
-      <div class="card">
-        <h3>🏆 大神挖角专项计划</h3>
-        <p>面向勺勺电竞、pp电竞、海米电竞三大竞品平台，以高分成+多维补贴+低门槛入驻为核心抓手</p>
-        <p><span class="highlight">核心优势：</span>首月5%抽成（竞品15-28%）· 秒到账提现（竞品2-7天）· 每单最少补贴5元 · 全员流水补贴</p>
-        <p><span class="highlight">预期效果：</span>3个月累计在岗大神30-48人，月总GMV预测48-77万</p>
-        <p><span class="highlight">五星大神月入测算：</span>订单收入13509元 + 补贴450元 + 梯度奖750元 + 全勤奖200元 + 搬家费165元 ≈ <strong style="color:var(--gold);">15,074元/月</strong></p>
-      </div>
-    </div>
+// 渲染页脚
+function renderFooter() {
+  const f = SITE_DATA.footer;
+  return `<footer>
+    <p>${f.copyright}</p>
+    <p style="margin-top:4px;">${f.note}</p>
+  </footer>`;
+}
 
-    <div style="margin-top:20px;">
-      <a href="https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u" class="project-link" target="_blank">原文档：业务方案 →</a>
-      <a href="https://docs.qq.com/doc/DZXJDdVZvUWFtU3hG" class="project-link" style="margin-left:8px;" target="_blank">原文档：全套产品需求 →</a>
-      <a href="https://docs.qq.com/doc/DZVV4blBjWHhXTEdt" class="project-link" style="margin-left:8px;" target="_blank">原文档：大神挖角计划 →</a>
-      <a href="https://docs.qq.com/doc/DZVB6RENHVm5wSWNO" class="project-link" style="margin-left:8px;" target="_blank">原文档：全流程SOP →</a>
-    </div>
-  </div>
+// 主渲染
+function renderAll() {
+  const app = document.getElementById('app');
+  app.innerHTML =
+    renderHero() +
+    renderAbout() +
+    renderSkills() +
+    renderExperience() +
+    renderProjects() +
+    renderStars() +
+    renderContact() +
+    renderFooter();
+  initInteractions();
+}
 
-  <!-- STAR Projects Summary -->
-  <h2 class="section-title" style="margin-top:48px;">STAR 项目精选</h2>
-  <p class="section-subtitle">以资深面试官视角呈现的 9 个核心项目，每个项目均用 STAR 法则详细说明个人核心作用</p>
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║                    🎯 交互功能初始化                           ║
+   ╚══════════════════════════════════════════════════════════════╝ */
 
-  <div class="grid2">
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">海外篮球手游赛道深度调研</h3>
-      <p><strong>S：</strong>公司产品团队需要评估篮球手游出海可行性，但缺乏海外市场的系统数据支撑。</p>
-      <p><strong>T：</strong>独立完成海外篮球手游赛道的全维度调研，覆盖 6 个国家、6 款核心竞品。</p>
-      <p><strong>A：</strong>建立多维度数据采集框架，通过对下载量、收入、RPD、评分等指标的交叉分析，率先识别出"哑铃结构"。</p>
-      <p><strong>R：</strong>产出 20+ 页深度调研报告，核心发现"哑铃结构"影响产品立项方向讨论，为出海策略提供关键数据支撑。</p>
-      <a href="projects/basketball-overseas.html" class="project-link">查看详情 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">《无尽冬日》全链路产品拆解</h3>
-      <p><strong>S：</strong>团队需要对 SLG 品类建立系统化的分析框架，为公司 SLG 新品立项提供参考。</p>
-      <p><strong>T：</strong>独立完成一头部 SLG 产品的六维全链路拆解，将其设计逻辑提炼为可复用的方法论。</p>
-      <p><strong>A：</strong>建立"市场→美术→玩法→养成→社交→商业化"六维分析框架，重点揭示"环境压迫性设计"与"卡点控制策略"。</p>
-      <p><strong>R：</strong>29+ 页完整拆解报告，成为团队 SLG 品类研究的基准参考文档，分析框架被后续多份调研复用。</p>
-      <a href="projects/endless-winter.html" class="project-link">查看详情 →</a>
-      <a href="https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF" class="project-link" style="margin-left:8px;" target="_blank">原文档 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">SLG 竞品活动对标分析</h3>
-      <p><strong>S：</strong>项目组需要系统了解 SLG 品类头部产品的活动运营策略，为自有产品活动体系搭建提供依据。</p>
-      <p><strong>T：</strong>完成 7 款头部 SLG 产品的竞品活动全量收集与分类对标。</p>
-      <p><strong>A：</strong>收集 70+ 活动案例，按活动类型、上线节奏、付费设计三维度分类，对比"IP联动"与"内生内容"两种模式。</p>
-      <p><strong>R：</strong>建立可检索的活动数据库，输出活动策略对比分析报告，为项目组活动设计提供直接参考。</p>
-      <a href="projects/slg-activities.html" class="project-link">查看详情 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">RPG 精细化活动运营分析</h3>
-      <p><strong>S：</strong>运营团队需要优化某滚服 RPG 的活动排期与商业化节奏，但缺乏系统化的活动节奏分析方法。</p>
-      <p><strong>T：</strong>对 17 个活动完成逐日拆解，输出活动节奏分析与商业化策略建议。</p>
-      <p><strong>A：</strong>归纳三段式上线节奏（预热→核心→收尾），分析各阶段商业化节点与玩家心理匹配度，并完成与7款SLG竞品的活动模式对标。</p>
-      <p><strong>R：</strong>提出的"四段式"活动节奏被运营团队采纳为后续活动排期参考模板，目前该表以 57% 完读率被持续高频查阅。</p>
-      <a href="projects/rpg-operations.html" class="project-link">查看详情 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">运营公告模板体系建设</h3>
-      <p><strong>S：</strong>项目在不同运营场景下公告风格不一致，玩家情绪管理效果参差不齐，缺乏可复用的标准化模板。</p>
-      <p><strong>T：</strong>建立 5 类核心场景的运营公告标准化模板体系。</p>
-      <p><strong>A：</strong>针对故障应急（3版本）、公测上线（3版本）、版本更新、服务器回档（3版本）、反外挂声明（2版本）各场景，提炼"三层情感结构"（共情→解释→补偿）与"IP一致性表达"原则。</p>
-      <p><strong>R：</strong>10+ 版本模板被运营团队直接复用，公告撰写效率提升显著，玩家情绪管理效果明显改善。</p>
-      <a href="projects/announcements.html" class="project-link">查看详情 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">篮球手游竞品深度拆解</h3>
-      <p><strong>S：</strong>公司新品立项阶段，需要判断篮球手游市场的竞争格局与差异化空间。</p>
-      <p><strong>T：</strong>对核心竞品完成全维度拆解，输出差异化策略建议。</p>
-      <p><strong>A：</strong>对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构→商业化闭环→关键平衡点的完整拆解，提出数值公平性平衡判断。</p>
-      <p><strong>R：</strong>拆解结论影响产品定位讨论，提出的"公平竞技+轻度养成"方向获得团队认可。</p>
-      <a href="projects/basketball-compete.html" class="project-link">查看详情 →</a>
-    </div>
-    <div class="card" style="border-color:var(--cyan);">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">《三角洲行动》陪玩业务方案搭建</h3>
-      <p><strong>S：</strong>公司需要从零搭建《三角洲行动》手游陪玩业务，缺乏完整的运营框架和执行方案。</p>
-      <p><strong>T：</strong>独立完成业务方案设计，覆盖供给端、需求侧、品控、定价、风控全链路。</p>
-      <p><strong>A：</strong>建立"日均300单/复购50%/客诉≤5%"KPI体系，设计100分制量化考核（服务60%+技术40%）、星级差异化定价（1-5星时薪80-160元）、优惠券5阶梯转化模型、三级风险应急预案及防套利机制。</p>
-      <p><strong>R：</strong>产出完整业务方案文档，设定补贴退出三重硬性指标（品控≥4.5/下单失败≤10%/自然复购≥15%），为业务可持续增长提供验证框架。</p>
-      <a href="https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u" class="project-link" target="_blank">查看原文档 →</a>
-    </div>
-    <div class="card" style="border-color:var(--cyan);">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">大神挖角专项计划与风控体系</h3>
-      <p><strong>S：</strong>电竞陪玩行业头部平台高抽成锁住优质打手资源，需要快速获取竞品核心人才。</p>
-      <p><strong>T：</strong>设计面向3大竞品平台的挖角方案，包含激励体系、风控机制与效果追踪。</p>
-      <p><strong>A：</strong>设计"首月95%分成+5元/单补贴"入驻激励、日/周/月三级奖励体系（日单王25元/周榜250元/月梯度最高4000元）+搬家费三阶梯（15+50+100元），同步建立押金扣除+奖励分期+异常订单识别三级防套利机制。</p>
-      <p><strong>R：</strong>预期3个月累计在岗大神30-48人，月总GMV预测48-77万；五星大神月入测算约15,074元，竞争力显著优于竞品。</p>
-      <a href="https://docs.qq.com/doc/DZVV4blBjWHhXTEdt" class="project-link" target="_blank">查看原文档 →</a>
-    </div>
-    <div class="card">
-      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
-      <h3 style="margin-top:10px;">《三国群英传：策定九州》产品拆解</h3>
-      <p><strong>S：</strong>项目组需要深入理解自有产品的设计逻辑与商业化问题，为后续优化提供方向。</p>
-      <p><strong>T：</strong>对游戏完成37+页全维度拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环。</p>
-      <p><strong>A：</strong>识别"大R统治力缺失"核心问题（军械系统单薄导致付费无法转化为战场统治力），分析循环断裂风险；提出分层充值礼包、VIP便捷特权等商业化优化建议。</p>
-      <p><strong>R：</strong>报告成为产品优化讨论的核心参考文档，商业化建议被纳入后续版本规划讨论。</p>
-      <a href="https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq" class="project-link" target="_blank">查看原文档 →</a>
-    </div>
-  </div>
-</section>
+function initInteractions() {
+  // 1. 滚动动画 (Intersection Observer)
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(r=>obs.observe(r));
 
-<!-- Contact -->
-<section id="contact">
-  <h2 class="section-title">联系我</h2>
-  <p class="section-subtitle">期待与你的交流</p>
-  <div class="grid2" style="max-width:600px;margin:0 auto;">
-    <div class="contact-item">
-      <div class="icon">📧</div>
-      <div>
-        <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">邮箱</div>
-        <div class="val">2876537460@qq.com</div>
-      </div>
-    </div>
-    <div class="contact-item">
-      <div class="icon">💬</div>
-      <div>
-        <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">微信</div>
-        <div class="val">15181981772</div>
-      </div>
-    </div>
-  </div>
-</section>
+  // 2. 技能条动画
+  const fills = document.querySelectorAll('.fill[data-width]');
+  const fillObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) {
+        e.target.style.width = e.target.dataset.width;
+        fillObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  fills.forEach(f=>fillObs.observe(f));
 
-<footer>
-  <p>© 2026 卢梦潇 · 中山大学 · 游戏运营</p>
-  <p style="margin-top:4px;">Built with passion for games. Last updated: June 2026</p>
-</footer>
+  // 3. 导航高亮 (Scroll Spy)
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', ()=>{
+    let current = '';
+    sections.forEach(sec=>{
+      const top = sec.offsetTop - 80;
+      if(window.scrollY >= top) current = sec.id;
+    });
+    navLinks.forEach(link=>{
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // 4. 回到顶部
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', ()=>{
+    btt.classList.toggle('visible', window.scrollY > 400);
+  });
+  btt.addEventListener('click', ()=>{
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  // 5. STAR 筛选
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const starCards = document.querySelectorAll('.star-card');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      filterBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      starCards.forEach(card=>{
+        if(cat==='全部' || card.dataset.cat===cat) {
+          card.style.display = '';
+          card.classList.add('reveal','visible');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+// 主题切换
+function initTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') {
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('theme-toggle').textContent = '☀️';
+  }
+  document.getElementById('theme-toggle').addEventListener('click', ()=>{
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if(isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme','dark');
+      document.getElementById('theme-toggle').textContent = '🌙';
+    } else {
+      document.documentElement.setAttribute('data-theme','light');
+      localStorage.setItem('theme','light');
+      document.getElementById('theme-toggle').textContent = '☀️';
+    }
+  });
+}
+
+// 打印
+function initPrint() {
+  document.getElementById('print-btn').addEventListener('click', ()=>{
+    window.print();
+  });
+}
+
+// 启动
+window.addEventListener('DOMContentLoaded', ()=>{
+  renderAll();
+  initTheme();
+  initPrint();
+  // 隐藏加载动画
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hidden');
+  }, 300);
+});
+</script>
 
 </body>
 </html>
