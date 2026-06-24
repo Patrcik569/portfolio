@@ -17,6 +17,7 @@
     --green: #2ecc71;
     --gold: #f0c060;
     --red: #e05555;
+    --cyan: #22d3ee;
     --radius: 12px;
     --radius-sm: 8px;
   }
@@ -34,9 +35,9 @@
     position:fixed; top:0; left:0; right:0; z-index:100;
     background: rgba(10,10,20,.92); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border); padding: 0 24px;
-    display:flex; align-items:center; justify-content:center; height:52px; gap:32px;
+    display:flex; align-items:center; justify-content:center; height:52px; gap:28px;
   }
-  nav a { color: var(--text2); font-size:14px; font-weight:500; padding:6px 0; border-bottom:2px solid transparent; transition:all .2s; }
+  nav a { color: var(--text2); font-size:13px; font-weight:500; padding:6px 0; border-bottom:2px solid transparent; transition:all .2s; }
   nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
   /* Sections */
@@ -60,7 +61,7 @@
     padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
     background: var(--card); border: 1px solid var(--border); color: var(--text2);
   }
-  .hero-stats { display:flex; gap:40px; justify-content:center; flex-wrap:wrap; margin-bottom: 40px; }
+  .hero-stats { display:flex; gap:36px; justify-content:center; flex-wrap:wrap; margin-bottom: 40px; }
   .hero-stat { text-align:center; }
   .hero-stat .num { font-size:36px; font-weight:800; color: var(--accent); }
   .hero-stat .label { font-size:13px; color: var(--text2); margin-top:4px; }
@@ -85,6 +86,7 @@
   .card h3 { font-size:18px; color:#fff; margin-bottom:12px; }
   .card p, .card li { font-size:14px; color: var(--text2); line-height:1.8; }
   .card ul { padding-left:18px; }
+  .card .highlight { color: var(--accent); font-weight: 600; }
 
   /* Two-column */
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
@@ -133,9 +135,9 @@
   @media (max-width:768px) {
     .grid2, .grid3, .grid4 { grid-template-columns:1fr; }
     .hero-name { font-size:32px; }
-    .hero-stats { gap:24px; }
-    nav { gap:16px; padding:0 12px; }
-    nav a { font-size:12px; }
+    .hero-stats { gap:20px; }
+    nav { gap:12px; padding:0 8px; }
+    nav a { font-size:11px; }
   }
 
   /* Dimensions header */
@@ -147,9 +149,10 @@
   .dim-2 { background:rgba(124,92,231,.15); color: var(--accent2); }
   .dim-3 { background:rgba(46,204,113,.15); color: var(--green); }
   .dim-4 { background:rgba(240,192,96,.15); color: var(--gold); }
+  .dim-5 { background:rgba(34,211,238,.15); color: var(--cyan); }
 
   /* Table */
-  table { width:100%; border-collapse:collapse; font-size:13px; margin: 16px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin: 12px 0; }
   th { background: var(--bg2); color: var(--accent); padding:10px 12px; text-align:left; font-weight:600; font-size:12px; }
   td { padding:10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
   tr:hover td { background: rgba(91,141,239,.05); }
@@ -160,6 +163,36 @@
   .star-t { background:rgba(124,92,231,.2); color: var(--accent2); }
   .star-a { background:rgba(46,204,113,.2); color: var(--green); }
   .star-r { background:rgba(240,192,96,.2); color: var(--gold); }
+
+  /* Content detail block */
+  .detail-block {
+    background: var(--bg2); border-radius: var(--radius-sm); padding: 20px; margin-top: 16px;
+    border-left: 3px solid var(--accent);
+  }
+  .detail-block h4 { font-size:15px; color:#fff; margin-bottom:10px; }
+  .detail-block p { font-size:13px; color: var(--text2); line-height:1.8; }
+
+  /* KPI highlight */
+  .kpi-row { display:flex; gap:16px; flex-wrap:wrap; margin: 12px 0; }
+  .kpi-item {
+    background: var(--bg2); border-radius: var(--radius-sm); padding: 12px 16px; text-align:center; flex:1; min-width:120px;
+  }
+  .kpi-item .kpi-num { font-size:22px; font-weight:800; color: var(--accent); }
+  .kpi-item .kpi-label { font-size:12px; color: var(--text2); margin-top:4px; }
+
+  /* Doc link badge */
+  .doc-badge {
+    display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px;
+    font-size:12px; font-weight:500; background: rgba(91,141,239,.1); border:1px solid rgba(91,141,239,.3);
+    color: var(--accent); margin: 4px 4px 4px 0; transition: all .2s;
+  }
+  .doc-badge:hover { background: rgba(91,141,239,.2); }
+
+  /* Method tag */
+  .method-tag {
+    display:inline-block; padding:3px 10px; border-radius:6px; font-size:12px; font-weight:500;
+    margin: 3px 3px; background: var(--bg2); border:1px solid var(--border); color: var(--text2);
+  }
 </style>
 </head>
 <body>
@@ -190,7 +223,8 @@
   <div class="hero-stats">
     <div class="hero-stat"><div class="num">2</div><div class="label">段游戏实习</div></div>
     <div class="hero-stat"><div class="num">10+</div><div class="label">品类覆盖</div></div>
-    <div class="hero-stat"><div class="num">8</div><div class="label">深度报告</div></div>
+    <div class="hero-stat"><div class="num">10+</div><div class="label">深度报告</div></div>
+    <div class="hero-stat"><div class="num">5+</div><div class="label">运营方案</div></div>
     <div class="hero-stat"><div class="num">3</div><div class="label">掌握语言</div></div>
   </div>
   <a href="#projects" class="btn-primary">查看作品集</a>
@@ -235,8 +269,8 @@
       <h3>📊 运营能力</h3>
       <div class="skill-bar"><div class="name">用户洞察与竞品分析</div><div class="bar"><div class="fill" style="width:90%;background:var(--accent);"></div></div></div>
       <div class="skill-bar"><div class="name">内容文案撰写</div><div class="bar"><div class="fill" style="width:88%;background:var(--accent2);"></div></div></div>
-      <div class="skill-bar"><div class="name">商业化运营</div><div class="bar"><div class="fill" style="width:80%;background:var(--green);"></div></div></div>
-      <div class="skill-bar"><div class="name">跨部门协作与项目管理</div><div class="bar"><div class="fill" style="width:85%;background:var(--gold);"></div></div></div>
+      <div class="skill-bar"><div class="name">商业化运营与定价策略</div><div class="bar"><div class="fill" style="width:85%;background:var(--green);"></div></div></div>
+      <div class="skill-bar"><div class="name">SOP体系建设与项目管理</div><div class="bar"><div class="fill" style="width:87%;background:var(--gold);"></div></div></div>
     </div>
     <div class="card">
       <h3>🛠️ 工具技能</h3>
@@ -258,7 +292,8 @@
       <div class="timeline-title">四三九九网络股份有限公司 · 发行运营管培生</div>
       <div class="timeline-desc">
         <strong>发行运营：</strong>了解学习竞品投放策略、买量素材、爆款打法，协同发行研发与多部门筹备运营物料和投放素材。<br>
-        <strong>数据处理：</strong>协助处理区服用户基础数据（DAU/MAU、留存、用户流失）、玩家行为数据和活动专项数据。
+        <strong>数据处理：</strong>协助处理区服用户基础数据（DAU/MAU、留存、用户流失）、玩家行为数据和活动专项数据。<br>
+        <strong>陪玩业务运营：</strong>主导《三角洲行动》手游陪玩业务从 0 到 1 搭建，独立完成业务方案、产品定价体系、招募考核SOP、大神挖角计划及全流程标准化运营文档，覆盖供给端招募考核、需求侧推广转化、品控客服与风险控制全链路。
       </div>
     </div>
     <div class="timeline-item">
@@ -266,8 +301,8 @@
       <div class="timeline-title">广州星辉天拓娱乐有限公司 · 手游运营实习生</div>
       <div class="timeline-desc">
         <strong>商业化运营：</strong>参与手游商业化模块，结合竞品调研与用户付费能力分析，参与游戏内道具、外观的定价方案。<br>
-        <strong>内容运营：</strong>独立负责游戏内公告、活动邮件文案撰写与备案，内容验收准确率 100%。<br>
-        <strong>竞品调研：</strong>开展多款同品类头部竞品的全维度调研，输出 3 份深度分析报告；参与新产品创意构思，提出 3 项可行性功能建议，其中 2 项被产品团队采纳。<br>
+        <strong>内容运营：</strong>独立负责游戏内公告、活动邮件文案撰写与备案，内容验收准确率 100%；建立 5 类场景 10+ 版本运营公告模板体系。<br>
+        <strong>竞品调研：</strong>开展多款同品类头部竞品的全维度调研，输出 3 份深度分析报告（《无尽冬日》29+页、《三国群英传：策定九州》37+页等）；参与新产品创意构思，提出 3 项可行性功能建议，其中 2 项被产品团队采纳。<br>
         <strong>跨部门协作：</strong>负责对接外部合作团队维护区服生态，协同投放、营销、研发等多部门推进项目首发。
       </div>
     </div>
@@ -291,7 +326,7 @@
 <!-- Projects -->
 <section id="projects">
   <h2 class="section-title" style="margin-bottom:8px;">作品集</h2>
-  <p class="section-subtitle">专业基底 · 设计闭环 · 技术前瞻 · 实战运营 — 四大维度覆盖游戏运营全链路</p>
+  <p class="section-subtitle">专业基底 · 设计闭环 · 技术前瞻 · 实战运营 · 商业化增长 — 五大维度覆盖游戏运营全链路</p>
 
   <!-- Dimension 1 -->
   <div style="margin-bottom:64px;">
@@ -310,7 +345,7 @@
     <div style="margin-top:20px;">
       <a href="projects/basketball-products.html" class="project-link">查看：篮球手游产品调研 →</a>
       <a href="projects/basketball-compete.html" class="project-link" style="margin-left:8px;">查看：篮球手游目标竞品分析 →</a>
-      <a href="https://docs.qq.com/sheet/DZWdtcktXSmpHVEtq" class="project-link" style="margin-left:8px;" target="_blank">原文档 →</a>
+      <a href="https://docs.qq.com/sheet/DZXNRVmpDdVBsRVVm" class="project-link" style="margin-left:8px;" target="_blank">原文档（篮球手游目标竞品分析） →</a>
     </div>
   </div>
 
@@ -338,11 +373,31 @@
   <div style="margin-bottom:64px;">
     <span class="dim-badge dim-3">维度三：技术前瞻与文化赋能</span>
     <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">跨品类视野 + 六维深度拆解</h3>
-    <div class="grid3">
+    <div class="grid2">
       <div class="card">
         <h3>❄️ 《无尽冬日》拆解</h3>
-        <p>六维全链路 SLG 分析（市场→美术→玩法→养成→社交→商业化），还原"环境压迫性设计"与"卡点控制策略"的底层逻辑，29+ 页完整报告。</p>
+        <p>六维全链路 SLG 分析（市场→美术→玩法→养成→社交→商业化），29+ 页完整报告。</p>
+        <div class="detail-block">
+          <h4>核心发现</h4>
+          <p><span class="highlight">环境压迫性设计：</span>通过联盟竞争和战力排名创造付费环境压力，个人排名奖励刺激持续付费。</p>
+          <p><span class="highlight">卡点控制策略：</span>关键成长节点设置自然卡点，如后期主城升级需耗费数天，付费即可立即完成。</p>
+          <p><span class="highlight">立体化付费矩阵：</span>基础功能型（建筑队列）→ 成长加速型（钻石加速）→ 稀缺资源型（英雄碎片）→ 外观特权型（城池皮肤），四层覆盖全付费能力玩家。</p>
+          <p><span class="highlight">市场表现：</span>微信小游戏上线29天登顶畅销榜，海外版全球累计下载5250万次，总收入9.35亿美元。2025年8月国内iOS月流水仍超3亿元。</p>
+        </div>
       </div>
+      <div class="card">
+        <h3>⚔️ 《三国群英传：策定九州》拆解</h3>
+        <p>37+ 页完整产品评测与拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环全维度分析。</p>
+        <div class="detail-block">
+          <h4>核心发现</h4>
+          <p><span class="highlight">创新铸兵坊系统：</span>传说武将专属兵器+强化洗练机制，突破传统养成制约，为战斗系统引入RPG养成逻辑。</p>
+          <p><span class="highlight">用户分层问题：</span>大R玩家统治力缺失——装扮系统视觉效果不足、军械种类稀少，导致大R无法在联盟作战中起决定性作用，违背付费初衷。</p>
+          <p><span class="highlight">循环断裂风险：</span>军械系统单薄导致大R投入无法转化为战场统治力，验证链条断裂后付费可能减少。</p>
+          <p><span class="highlight">商业化建议：</span>缺乏清晰礼包等级划分，建议初期推出分层充值礼包，重点优化外观而非数值，设置VIP便捷特权。</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:24px;">
       <div class="card">
         <h3>⚔️ 《王者荣耀》分析</h3>
         <p>经济系统平衡机制、皮肤"文化叙事+限定稀缺+社交展示"三维价值模型、社交-战斗融合设计深度分析。</p>
@@ -354,13 +409,15 @@
     </div>
     <div style="margin-top:20px;">
       <a href="projects/endless-winter.html" class="project-link">查看：无尽冬日拆解 →</a>
+      <a href="https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF" class="project-link" style="margin-left:8px;" target="_blank">无尽冬日原文档（PDF） →</a>
+      <a href="https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq" class="project-link" style="margin-left:8px;" target="_blank">三国群英传原文档（PDF） →</a>
       <a href="projects/honor-of-kings.html" class="project-link" style="margin-left:8px;">查看：王者荣耀分析 →</a>
       <a href="projects/zhuzai-world.html" class="project-link" style="margin-left:8px;">查看：主宰世界拆解 →</a>
     </div>
   </div>
 
   <!-- Dimension 4 -->
-  <div style="margin-bottom:48px;">
+  <div style="margin-bottom:64px;">
     <span class="dim-badge dim-4">维度四：实战运营</span>
     <h3 style="font-size:22px;color:#fff;margin-bottom:24px;">从策略到执行的全流程运营能力</h3>
     <div class="grid2">
@@ -371,19 +428,146 @@
       <div class="card">
         <h3>📢 运营公告模板体系</h3>
         <p>建立 5 类场景（故障应急/公测上线/版本更新/服务器回档/反外挂声明）的完整公告模板，每类 2-3 个版本，提炼"三层情感结构"与"分层补偿设计"方法论。</p>
+        <div class="detail-block">
+          <h4>三层情感结构方法论</h4>
+          <p><span class="method-tag">① 共情层</span> 以"各位主公"称呼建立IP沉浸感，第一时间承认问题、表达歉意</p>
+          <p><span class="method-tag">② 解释层</span> 用玩家可理解的语言说明问题原因与处理方案，避免技术术语</p>
+          <p><span class="method-tag">③ 补偿层</span> 分层补偿设计：基础补偿（全服）+ 等待补偿（按时长）+ 特别致歉（受影响用户）</p>
+          <p style="margin-top:8px;color:var(--accent);">IP一致性表达：以《三国群英传》为例，公告统一使用"主公""军资补给""惶恐敬上"等三国语境表达，增强沉浸感。</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h3>📋 公告模板实例：炸服应急（3版本）</h3>
+        <p><strong style="color:#fff;">模板一·紧急通知：</strong>"目前部分主公遭遇登录困难，我们已火速定位问题，正在全力抢修！补偿方案确定后将第一时间公告。"</p>
+        <p><strong style="color:#fff;">模板二·修复公告：</strong>"因今日公测人气爆燃，瞬间涌入的兵马远超预期（服务器请求过载）...维护期间向所有注册主公发放元宝×1000补偿。"</p>
+        <p><strong style="color:#fff;">模板三·补偿邮件：</strong>"主公，您的军资补给已送达！【三军粮饷】元宝×800【休整补偿】体力丹×3【特别致歉】聚义令×5"</p>
+      </div>
+      <div class="card">
+        <h3>📋 公告模板实例：反外挂声明（2版本）</h3>
+        <p><strong style="color:#fff;">版本一·声明：</strong>"我们对任何使用第三方非法软件（外挂）的行为，将采取'零容忍'态度。首犯即重典：永久封禁涉事账号！"</p>
+        <p><strong style="color:#fff;">版本二·封禁公示：</strong>"经严密监控与反复核实，近期对一批确认使用外挂的违规账号施以最严厉惩处：本次共计永久封禁违规账号【XXXX】个！"</p>
+        <p style="margin-top:8px;color:var(--gold);">法律背书：引用《刑法》第285条、《网络安全法》第27条，增强威慑力。</p>
       </div>
     </div>
     <div style="margin-top:20px;">
       <a href="projects/rpg-operations.html" class="project-link">查看：精细化活动运营 →</a>
       <a href="projects/announcements.html" class="project-link" style="margin-left:8px;">查看：运营公告体系 →</a>
       <a href="projects/slg-activities.html" class="project-link" style="margin-left:8px;">查看：SLG竞品活动收集 →</a>
+      <a href="https://docs.qq.com/doc/DZXJKWXpURkRucGZr" class="project-link" style="margin-left:8px;" target="_blank">原文档：炸服公告 →</a>
+      <a href="https://docs.qq.com/doc/DZW11UU9OT2FrWEJQ" class="project-link" style="margin-left:8px;" target="_blank">原文档：反外挂声明 →</a>
+      <a href="https://docs.qq.com/doc/DZXp6UFRsWU9kR2xm" class="project-link" style="margin-left:8px;" target="_blank">原文档：服务器回档 →</a>
+    </div>
+  </div>
+
+  <!-- Dimension 5 (NEW) -->
+  <div style="margin-bottom:48px;">
+    <span class="dim-badge dim-5">维度五：商业化运营与增长策略</span>
+    <h3 style="font-size:22px;color:#fff;margin-bottom:8px;">《三角洲行动》手游陪玩业务 — 从0到1全链路搭建</h3>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:24px;">主导电竞陪玩业务完整搭建，独立产出业务方案、产品定价、招募SOP、挖角计划、风控体系5份核心运营文档</p>
+
+    <!-- KPI Summary -->
+    <div class="card" style="margin-bottom:24px;">
+      <h3>🎯 业务方案核心KPI体系</h3>
+      <p style="margin-bottom:12px;">执行周期：2026.4.18 - 5.16（4周），分补贴驱动期（Week 1-2）与补贴过渡期（Week 3-4）两阶段</p>
+      <div class="kpi-row">
+        <div class="kpi-item"><div class="kpi-num">300</div><div class="kpi-label">日均有效订单（目标）</div></div>
+        <div class="kpi-item"><div class="kpi-num">50%</div><div class="kpi-label">整体复购率</div></div>
+        <div class="kpi-item"><div class="kpi-num">15%</div><div class="kpi-label">手游订单占比</div></div>
+        <div class="kpi-item"><div class="kpi-num">≤5%</div><div class="kpi-label">客诉率</div></div>
+      </div>
+      <p style="margin-top:8px;color:var(--gold);font-size:13px;">补贴退出硬性条件（三项全满足）：品控评分≥4.5 · 下单失败率≤10% · 自然复购率≥15%</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>📊 量化考核体系（100分制）</h3>
+        <p>坚持"服务权重60%，技术权重40%"与"技术可容错，服务零容忍"核心原则</p>
+        <table>
+          <tr><th>评分维度</th><th>分值</th><th>不合格红线</th></tr>
+          <tr><td>沟通主动性</td><td>10分</td><td>零沟通直接不合格</td></tr>
+          <tr><td>服务态度礼貌度</td><td>10分</td><td>态度恶劣直接不合格</td></tr>
+          <tr><td>护航服务细节</td><td>15分</td><td>自顾发育扣满</td></tr>
+          <tr><td>情绪稳定抗压</td><td>10分</td><td>摆烂消极扣满</td></tr>
+          <tr><td>诚信纪律性</td><td>10分</td><td>养猪刷数据不合格</td></tr>
+          <tr><td>互动氛围控场</td><td>5分</td><td>—</td></tr>
+          <tr><td>击杀数据达标</td><td>15分</td><td>每少1杀扣1分</td></tr>
+          <tr><td>物资撤离达标</td><td>10分</td><td>—</td></tr>
+          <tr><td>游戏意识节奏</td><td>10分</td><td>—</td></tr>
+          <tr><td>对局整体质量</td><td>5分</td><td>—</td></tr>
+        </table>
+        <p style="margin-top:8px;color:var(--accent);">星级评定：70-79分=2星 · 80-84分=3星 · 85-89分=4星 · 90+=5星</p>
+      </div>
+      <div class="card">
+        <h3>💰 星级差异化定价体系</h3>
+        <p>按时长计费 + 难度分级，高星级与高难度带来显著溢价</p>
+        <table>
+          <tr><th>星级</th><th>时薪</th><th>补贴/单</th><th>分成</th></tr>
+          <tr><td>1星（新人）</td><td>80元/h</td><td>15元</td><td>80%</td></tr>
+          <tr><td>2星（合格）</td><td>80元/h</td><td>—</td><td>82%</td></tr>
+          <tr><td>3星（成熟）</td><td>110元/h</td><td>3元</td><td>85%</td></tr>
+          <tr><td>4星（优质）</td><td>130元/h</td><td>5元</td><td>87%</td></tr>
+          <tr><td>5星（招牌）</td><td>160元/h</td><td>10元</td><td>90%</td></tr>
+        </table>
+        <p style="margin-top:8px;">体验单引流价：1-2星118元 / 5星158元；趣味单按★~★★★★四难度分级，最高"大红对碰"5星执行价7715元。</p>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h3>🔄 优惠券阶梯转化设计</h3>
+        <p>引导用户留存并提升LTV，每笔完单后系统自动推送下一阶梯优惠券</p>
+        <table>
+          <tr><th>阶梯</th><th>套餐</th><th>额外权益</th><th>目的</th></tr>
+          <tr><td>第一单</td><td>88元保底</td><td>赠送10元券</td><td>引流钩子</td></tr>
+          <tr><td>第二单</td><td>108元</td><td>2张10元券</td><td>引导趣味单</td></tr>
+          <tr><td>第三单</td><td>118元</td><td>—</td><td>培养习惯</td></tr>
+          <tr><td>第四单</td><td>128元</td><td>2张10元券</td><td>提升粘性</td></tr>
+          <tr><td>第五单+</td><td>158元</td><td>—</td><td>LTV最大化</td></tr>
+        </table>
+        <p style="margin-top:8px;color:var(--green);">关键转化目标：第一单→第二单≥20%，第二单→第三单≥20%</p>
+      </div>
+      <div class="card">
+        <h3>🛡️ 三级风险应急预案</h3>
+        <p><span class="highlight">一级·补贴退出延期：</span>Week 2末退出指标未达标则顺延一周，加强品控与客服培训</p>
+        <p><span class="highlight">二级·供应链补充：</span>大神招募不达预期时启动备用渠道（合作公会推荐），临时提高校园合伙人奖励</p>
+        <p><span class="highlight">三级·品控提升：</span>评分下滑时将平台抽检比例从10%提升至20%，建立大神分层培训体系</p>
+        <div class="detail-block" style="margin-top:12px;">
+          <h4>防套利机制</h4>
+          <p>押金扣除制度（每单扣留10%，连续活跃30天后解除）+ 奖励分期发放（与真实留存挂钩）+ 异常订单识别（IP/设备关联、充值下单时间差<1分钟、同一打手承接同一老板>80%自动预警）</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h3>📝 全流程标准化SOP（6步闭环）</h3>
+        <p><span class="method-tag">Step1 破冰转化</span><span class="method-tag">Step2 进群考核</span><span class="method-tag">Step3 量化定级</span><span class="method-tag">Step4 权益宣讲</span><span class="method-tag">Step5 在岗抽检</span><span class="method-tag">Step6 月度复盘</span></p>
+        <p style="margin-top:8px;">覆盖建联转化、考核定级、上岗激励、在岗留存、升降级管控全闭环。统一话术、统一流程、统一标准、统一奖惩。</p>
+        <p style="color:var(--accent);">核心逻辑：服务权重60%、技术权重40%，技术可容错、服务零容忍</p>
+      </div>
+      <div class="card">
+        <h3>🏆 大神挖角专项计划</h3>
+        <p>面向勺勺电竞、pp电竞、海米电竞三大竞品平台，以高分成+多维补贴+低门槛入驻为核心抓手</p>
+        <p><span class="highlight">核心优势：</span>首月5%抽成（竞品15-28%）· 秒到账提现（竞品2-7天）· 每单最少补贴5元 · 全员流水补贴</p>
+        <p><span class="highlight">预期效果：</span>3个月累计在岗大神30-48人，月总GMV预测48-77万</p>
+        <p><span class="highlight">五星大神月入测算：</span>订单收入13509元 + 补贴450元 + 梯度奖750元 + 全勤奖200元 + 搬家费165元 ≈ <strong style="color:var(--gold);">15,074元/月</strong></p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <a href="https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u" class="project-link" target="_blank">原文档：业务方案 →</a>
+      <a href="https://docs.qq.com/doc/DZXJDdVZvUWFtU3hG" class="project-link" style="margin-left:8px;" target="_blank">原文档：全套产品需求 →</a>
+      <a href="https://docs.qq.com/doc/DZVV4blBjWHhXTEdt" class="project-link" style="margin-left:8px;" target="_blank">原文档：大神挖角计划 →</a>
+      <a href="https://docs.qq.com/doc/DZVB6RENHVm5wSWNO" class="project-link" style="margin-left:8px;" target="_blank">原文档：全流程SOP →</a>
     </div>
   </div>
 
   <!-- STAR Projects Summary -->
   <h2 class="section-title" style="margin-top:48px;">STAR 项目精选</h2>
-  <p class="section-subtitle">以资深面试官视角呈现的 6 个核心项目，每个项目均用 STAR 法则详细说明个人核心作用</p>
-  
+  <p class="section-subtitle">以资深面试官视角呈现的 9 个核心项目，每个项目均用 STAR 法则详细说明个人核心作用</p>
+
   <div class="grid2">
     <div class="card">
       <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
@@ -402,6 +586,7 @@
       <p><strong>A：</strong>建立"市场→美术→玩法→养成→社交→商业化"六维分析框架，重点揭示"环境压迫性设计"与"卡点控制策略"。</p>
       <p><strong>R：</strong>29+ 页完整拆解报告，成为团队 SLG 品类研究的基准参考文档，分析框架被后续多份调研复用。</p>
       <a href="projects/endless-winter.html" class="project-link">查看详情 →</a>
+      <a href="https://docs.qq.com/pdf/DZXRTR21yeWZVUnBF" class="project-link" style="margin-left:8px;" target="_blank">原文档 →</a>
     </div>
     <div class="card">
       <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
@@ -438,6 +623,33 @@
       <p><strong>A：</strong>对《全明星街球派对》《美职篮巅峰对决》等关键竞品完成玩法复合结构→商业化闭环→关键平衡点的完整拆解，提出数值公平性平衡判断。</p>
       <p><strong>R：</strong>拆解结论影响产品定位讨论，提出的"公平竞技+轻度养成"方向获得团队认可。</p>
       <a href="projects/basketball-compete.html" class="project-link">查看详情 →</a>
+    </div>
+    <div class="card" style="border-color:var(--cyan);">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">《三角洲行动》陪玩业务方案搭建</h3>
+      <p><strong>S：</strong>公司需要从零搭建《三角洲行动》手游陪玩业务，缺乏完整的运营框架和执行方案。</p>
+      <p><strong>T：</strong>独立完成业务方案设计，覆盖供给端、需求侧、品控、定价、风控全链路。</p>
+      <p><strong>A：</strong>建立"日均300单/复购50%/客诉≤5%"KPI体系，设计100分制量化考核（服务60%+技术40%）、星级差异化定价（1-5星时薪80-160元）、优惠券5阶梯转化模型、三级风险应急预案及防套利机制。</p>
+      <p><strong>R：</strong>产出完整业务方案文档，设定补贴退出三重硬性指标（品控≥4.5/下单失败≤10%/自然复购≥15%），为业务可持续增长提供验证框架。</p>
+      <a href="https://docs.qq.com/doc/DZUFYaEZFZVNIRm1u" class="project-link" target="_blank">查看原文档 →</a>
+    </div>
+    <div class="card" style="border-color:var(--cyan);">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">大神挖角专项计划与风控体系</h3>
+      <p><strong>S：</strong>电竞陪玩行业头部平台高抽成锁住优质打手资源，需要快速获取竞品核心人才。</p>
+      <p><strong>T：</strong>设计面向3大竞品平台的挖角方案，包含激励体系、风控机制与效果追踪。</p>
+      <p><strong>A：</strong>设计"首月95%分成+5元/单补贴"入驻激励、日/周/月三级奖励体系（日单王25元/周榜250元/月梯度最高4000元）+搬家费三阶梯（15+50+100元），同步建立押金扣除+奖励分期+异常订单识别三级防套利机制。</p>
+      <p><strong>R：</strong>预期3个月累计在岗大神30-48人，月总GMV预测48-77万；五星大神月入测算约15,074元，竞争力显著优于竞品。</p>
+      <a href="https://docs.qq.com/doc/DZVV4blBjWHhXTEdt" class="project-link" target="_blank">查看原文档 →</a>
+    </div>
+    <div class="card">
+      <span class="star-tag star-s">S</span><span class="star-tag star-t">T</span><span class="star-tag star-a">A</span><span class="star-tag star-r">R</span>
+      <h3 style="margin-top:10px;">《三国群英传：策定九州》产品拆解</h3>
+      <p><strong>S：</strong>项目组需要深入理解自有产品的设计逻辑与商业化问题，为后续优化提供方向。</p>
+      <p><strong>T：</strong>对游戏完成37+页全维度拆解报告，覆盖美术、玩法、养成、社交、商业化、用户分层、游戏循环。</p>
+      <p><strong>A：</strong>识别"大R统治力缺失"核心问题（军械系统单薄导致付费无法转化为战场统治力），分析循环断裂风险；提出分层充值礼包、VIP便捷特权等商业化优化建议。</p>
+      <p><strong>R：</strong>报告成为产品优化讨论的核心参考文档，商业化建议被纳入后续版本规划讨论。</p>
+      <a href="https://docs.qq.com/pdf/DZWRzdmFFd3BrY2Jq" class="project-link" target="_blank">查看原文档 →</a>
     </div>
   </div>
 </section>
